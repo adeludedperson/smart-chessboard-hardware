@@ -6,6 +6,12 @@ A 64-square chessboard that detects where pieces stand with one Hall-effect sens
 
 *Render of the enclosure design for the sensing board (the renders call it "v5"). Renders, not photos.*
 
+## What it is for
+
+Tournament chess is played on a real board, but engines, training tools and online opponents all live on a screen. This board joins the two. You move real pieces, the board reads the position, and a chess app on a computer treats it as your move: against an engine, in a training exercise, or in a live Lichess game. The reply shows in the app and you play it on the board.
+
+My brother plays over-the-board tournaments and practises on this board every day.
+
 ## How it works
 
 ![Render of the four quadrant boards chained together and wired to the ESP32](renders/v1_sensing_wiring_top.png)
@@ -83,6 +89,7 @@ The board answers at `chess-sensor.local`, with a status page showing Wi-Fi sign
 
 ## Status
 
+- **2026-11-14:** In daily use for tournament practice.
 - **2026-08-24:** Five v1 quadrant PCBs fabricated. Four assembled and chained into a 64-square board that passes the 64-stage gate test, detects a full set of 32 pieces, and streams over Wi-Fi. The wooden frame and playing surface in [docs/MECHANICAL.md](docs/MECHANICAL.md) were still listed as pending on this date.
 - **2026-09-26:** DGT 3000 clock bridge tested on a real clock.
 - **2026-09-26:** Quadrant v2, hub v2, hub v3 and the RFID test rig are designed and DRC-clean. No fabrication of these boards is recorded.
