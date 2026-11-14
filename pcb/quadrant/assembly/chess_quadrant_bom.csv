@@ -1,0 +1,7 @@
+Item Number,Item Description,Manufacturer Part Number,Value,Package,Designator,Quantity,Assembly Instructions
+1,"Hall effect sensor, digital, TO-92",A3144E,A3144,TO-92,"S0,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15",16,"MOUNT ON BOTTOM SIDE, flush to board. CRITICAL: mirror-pinout clones - insert 180deg rotated vs standard: TEXT/printed side of package faces the FLAT side of silk outline. Solder ONE at S0 first, power 5V + magnet test (output pulls low), confirm with customer before soldering the rest. See ASSEMBLY_NOTES.md"
+2,"Resistor 10k Ohm 1/4W 5% axial",CFR-25JB-52-10K,10k,Axial DIN0207 P10.16mm,"R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15",16,Top side. Not polarized
+3,"Ceramic disc capacitor 100nF 50V",K104K15X7RF53L2,100n,Disc D5.0mm P5.00mm,"C0,C1,C2,C3,C4,C5,C6,C7,C8,C9",10,Top side. Not polarized
+4,"8-bit parallel-load shift register, DIP-16",SN74HC165N,74HC165,DIP-16 W7.62mm,"U1,U2",2,Top side. Pin-1 notch matches silkscreen notch
+5,"Pin header male 1x6 2.54mm vertical, through-hole",PRPC006SAAN-RC,1x6 header,PinHeader 1x06 P2.54mm,J1,1,Top side. Vertical
+6,"Pin header male 1x6 2.54mm vertical, through-hole",PRPC006SAAN-RC,1x6 header,PinHeader 1x06 P2.54mm,J2,1,Top side. Vertical

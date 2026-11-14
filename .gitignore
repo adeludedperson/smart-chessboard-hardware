@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.pyc
+firmware/**/build/
+
+# Wi-Fi credentials for board_stream_wifi and dgt_clock_bridge
+# (copy secrets.example.h -> secrets.h and fill it in)
+firmware/board_stream_wifi/secrets.h
+firmware/dgt_clock_bridge/secrets.h
+
+# KiCad local history and backups
+pcb/**/.history/
+pcb/**/*-backups/
+
+# python venv
+.venv/

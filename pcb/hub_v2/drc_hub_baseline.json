@@ -1,0 +1,2421 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-01T02:36:00",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error"
+    ],
+    "kicad_version": "10.0.4",
+    "schematic_parity": [],
+    "source": "chess_hub_v2.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.275,
+                        "y": 1.35
+                    },
+                    "uuid": "b57e1e6b-dc23-497f-a516-9af229dd6902"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.125,
+                        "y": 5.15
+                    },
+                    "uuid": "e7d13f68-7a09-4844-9459-f1889677acc9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 5 [GND] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 37.3,
+                        "y": 1.3
+                    },
+                    "uuid": "0bb36be4-fecf-453b-954c-b39ad44962ce"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 5 [GND] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 37.3,
+                        "y": 1.3
+                    },
+                    "uuid": "0bb36be4-fecf-453b-954c-b39ad44962ce"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.275,
+                        "y": 1.35
+                    },
+                    "uuid": "b57e1e6b-dc23-497f-a516-9af229dd6902"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [G27] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 7.25,
+                        "y": 23.71
+                    },
+                    "uuid": "324beafa-6acf-4a76-b6e5-092770cab66f"
+                },
+                {
+                    "description": "Track [G27] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 57.0625,
+                        "y": 20.0
+                    },
+                    "uuid": "0d277b19-28ea-44eb-95de-9ec66c353b9a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [BATP] on B.Cu, length 0.1000 mm",
+                    "pos": {
+                        "x": 4.31,
+                        "y": 49.5
+                    },
+                    "uuid": "334c2cd0-688e-41ec-91e6-17ee8d1f2e55"
+                },
+                {
+                    "description": "Pad 1 [BATP] of BT1 on F.Cu",
+                    "pos": {
+                        "x": 4.31,
+                        "y": 49.5
+                    },
+                    "uuid": "bf0e3ac5-cf4b-46ae-b11a-38bf8437b7cc"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [PROG] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 32.174999,
+                        "y": 45.7
+                    },
+                    "uuid": "b9e03820-1bc5-49a8-9cbf-29ae59b3df8f"
+                },
+                {
+                    "description": "Pad 2 [PROG] of U3 on F.Cu",
+                    "pos": {
+                        "x": 31.525,
+                        "y": 39.365
+                    },
+                    "uuid": "4baa72c2-2a6c-4dee-83d4-f11e596e1858"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [CHRGK] of R6 on F.Cu",
+                    "pos": {
+                        "x": 39.175,
+                        "y": 35.5
+                    },
+                    "uuid": "c07dbb02-8329-4b6f-98f8-a4b8d1988bec"
+                },
+                {
+                    "description": "Track [CHRGK] on B.Cu, length 4.8350 mm",
+                    "pos": {
+                        "x": 39.675,
+                        "y": 39.365
+                    },
+                    "uuid": "b66400df-50c0-4758-9a42-879afef2b9ab"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [IO0] of SW3 on F.Cu",
+                    "pos": {
+                        "x": 42.52,
+                        "y": 13.25
+                    },
+                    "uuid": "95f484f5-f628-4cf9-856b-dcb1a8a9675a"
+                },
+                {
+                    "description": "Track [IO0] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 24.75,
+                        "y": 26.25
+                    },
+                    "uuid": "3a586950-21a1-417d-9080-aa4c5c9364fa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [IO0] of SW3 on F.Cu",
+                    "pos": {
+                        "x": 50.48,
+                        "y": 13.25
+                    },
+                    "uuid": "1caadcf7-0d4a-45f4-9268-1ad2c8a0c6d9"
+                },
+                {
+                    "description": "Track [IO0] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 42.52,
+                        "y": 13.25
+                    },
+                    "uuid": "5bda2f8e-bc79-4b53-9654-c4d17114f0ad"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [+3V3] of U4 on F.Cu",
+                    "pos": {
+                        "x": 12.85,
+                        "y": 31.5
+                    },
+                    "uuid": "d1266a87-d574-42e3-89a1-421c57585d2e"
+                },
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 8.0,
+                        "y": 31.95
+                    },
+                    "uuid": "b3d24ac7-8a62-4f9e-a275-c8d555d314d5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 22.9100 mm",
+                    "pos": {
+                        "x": 70.16,
+                        "y": 4.139999
+                    },
+                    "uuid": "f69ceb90-493f-4599-8002-a5daa80e2806"
+                },
+                {
+                    "description": "Track [+3V3] on F.Cu, length 62.1600 mm",
+                    "pos": {
+                        "x": 8.0,
+                        "y": -0.699999
+                    },
+                    "uuid": "ed391d99-de49-4a55-9e10-689804c40afa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [EN] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 12.28
+                    },
+                    "uuid": "462de246-7591-4c37-b6e6-9bfc09ddb3a0"
+                },
+                {
+                    "description": "Pad 1 [EN] of SW2 on F.Cu",
+                    "pos": {
+                        "x": 42.52,
+                        "y": 6.25
+                    },
+                    "uuid": "86264e4f-1b6f-4745-88ed-6275b089b181"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [EN] of SW2 on F.Cu",
+                    "pos": {
+                        "x": 50.48,
+                        "y": 6.25
+                    },
+                    "uuid": "f656d4da-ff09-4da5-b5c6-261d5dc28cf5"
+                },
+                {
+                    "description": "Track [EN] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 42.52,
+                        "y": 6.25
+                    },
+                    "uuid": "f29c623a-c294-4c9f-bb1f-e0973c3a8a07"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/PL] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 7.25,
+                        "y": 21.17
+                    },
+                    "uuid": "ea4fd1cb-1cb7-4c76-911e-860ea437c689"
+                },
+                {
+                    "description": "PTH pad 1 [/PL] of J1",
+                    "pos": {
+                        "x": 60.0,
+                        "y": 4.14
+                    },
+                    "uuid": "2c01165f-b42b-45fa-9981-381fcc97160a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [CP] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 7.25,
+                        "y": 22.44
+                    },
+                    "uuid": "1d232aaf-099b-411b-9fd4-e8a878ca7015"
+                },
+                {
+                    "description": "PTH pad 3 [CP] of J1",
+                    "pos": {
+                        "x": 62.54,
+                        "y": 4.14
+                    },
+                    "uuid": "dc3c9adf-3af3-4f3e-b7a1-099387e808fa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [SER] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 7.25,
+                        "y": 24.98
+                    },
+                    "uuid": "123f06f7-858a-45fe-a0a4-82e541226a48"
+                },
+                {
+                    "description": "PTH pad 5 [SER] of J1",
+                    "pos": {
+                        "x": 65.08,
+                        "y": 4.14
+                    },
+                    "uuid": "b1ddfc12-4b2b-4eee-8efc-1440a73f4c74"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [GND] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 37.3,
+                        "y": 1.3
+                    },
+                    "uuid": "73c54112-5f0f-4abd-88cd-bed9c92d1442"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 37.3,
+                        "y": 3.1
+                    },
+                    "uuid": "d5dfcc0a-fc69-40d6-b1f5-a472b746172c"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [VBUS] on F.Cu, length 3.2000 mm",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 1.3
+                    },
+                    "uuid": "7d8d61fd-fd2d-450a-91e9-e790672cfbff"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [VBUS] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 4.5
+                    },
+                    "uuid": "c02c59a4-53cd-4fa1-8ac8-02a51f284db3"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [VBUS] on B.Cu, length 16.3000 mm",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 7.3
+                    },
+                    "uuid": "1e841ee8-6bf9-4169-985c-0d7fb03967f8"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [VBUS] on B.Cu, length 2.8000 mm",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 4.5
+                    },
+                    "uuid": "fbc21dbb-9b4a-4f85-af72-9eb47c1b4128"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "140d9780-d727-4166-9ca5-bfce766d5b61"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 8.5
+                    },
+                    "uuid": "4e491a48-e054-496e-872d-0294071f6c22"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 8.5
+                    },
+                    "uuid": "4e491a48-e054-496e-872d-0294071f6c22"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": 8.5
+                    },
+                    "uuid": "5a20b64e-ad72-4d78-89e3-c6d61742f69e"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": 8.5
+                    },
+                    "uuid": "5a20b64e-ad72-4d78-89e3-c6d61742f69e"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 16.1000 mm",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 8.5
+                    },
+                    "uuid": "d31a5900-c4dd-461d-899e-7a0d541ad4e4"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 16.1000 mm",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 8.5
+                    },
+                    "uuid": "d31a5900-c4dd-461d-899e-7a0d541ad4e4"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 6.3000 mm",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 8.5
+                    },
+                    "uuid": "e1b5268f-98e7-42cb-b446-264169b7c42b"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 6.3000 mm",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 8.5
+                    },
+                    "uuid": "e1b5268f-98e7-42cb-b446-264169b7c42b"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on F.Cu, length 62.1600 mm",
+                    "pos": {
+                        "x": 8.0,
+                        "y": -0.699999
+                    },
+                    "uuid": "ed391d99-de49-4a55-9e10-689804c40afa"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 6.85,
+                        "y": 8.5
+                    },
+                    "uuid": "03de049d-0a5e-494c-ac95-35ceac87afa0"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 6.6,
+                        "y": 8.5
+                    },
+                    "uuid": "0d57c5a2-404a-457b-b3b3-e17783392263"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 16.8,
+                        "y": 8.5
+                    },
+                    "uuid": "27e4550e-84f2-477a-99e2-2a883ce543b7"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 5.45,
+                        "y": 8.5
+                    },
+                    "uuid": "400f0779-1f7c-4abb-8ad5-68f2da1dd4f2"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 8.0,
+                        "y": -0.699999
+                    },
+                    "uuid": "86a66bf9-0236-4d19-94da-8fc66e41fd1f"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 8.7,
+                        "y": 8.5
+                    },
+                    "uuid": "9825131f-9f20-4696-a75f-b7a18613fa53"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 8.0,
+                        "y": 8.5
+                    },
+                    "uuid": "9c074b86-9365-4072-86b0-4846178bb51f"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "af43e502-6aa7-46a8-abc6-b84c37004207"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 8.5
+                    },
+                    "uuid": "b7400d9f-b7d8-4ba6-828f-3d8b5eb62210"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 21.549999,
+                        "y": 8.5
+                    },
+                    "uuid": "cdd011e8-9082-4851-ba8c-7d041e9206e7"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 25.2500 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": 8.5
+                    },
+                    "uuid": "47bd0386-26f7-4e83-8a5d-4cbc009ef7a8"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 25.2500 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": 8.5
+                    },
+                    "uuid": "47bd0386-26f7-4e83-8a5d-4cbc009ef7a8"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 7.7750 mm",
+                    "pos": {
+                        "x": 8.7,
+                        "y": 8.5
+                    },
+                    "uuid": "5f268ee2-dc20-4c2c-875a-6508af76b5b3"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 7.7750 mm",
+                    "pos": {
+                        "x": 8.7,
+                        "y": 8.5
+                    },
+                    "uuid": "5f268ee2-dc20-4c2c-875a-6508af76b5b3"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 23.0000 mm",
+                    "pos": {
+                        "x": 21.549999,
+                        "y": 8.5
+                    },
+                    "uuid": "720dfe7f-c6b7-4f31-83ed-48ff98fe04c6"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 23.0000 mm",
+                    "pos": {
+                        "x": 21.549999,
+                        "y": 8.5
+                    },
+                    "uuid": "720dfe7f-c6b7-4f31-83ed-48ff98fe04c6"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 13.7500 mm",
+                    "pos": {
+                        "x": 16.8,
+                        "y": 8.5
+                    },
+                    "uuid": "765843d1-8617-48cd-ae73-be1ae872f4ec"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 13.7500 mm",
+                    "pos": {
+                        "x": 16.8,
+                        "y": 8.5
+                    },
+                    "uuid": "765843d1-8617-48cd-ae73-be1ae872f4ec"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 34.4500 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "ae36cb04-f8a3-4e28-bf69-655129267456"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 34.4500 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "ae36cb04-f8a3-4e28-bf69-655129267456"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 2.5100 mm",
+                    "pos": {
+                        "x": 6.85,
+                        "y": 8.5
+                    },
+                    "uuid": "d9276b4f-5339-4e8d-a5e1-3ab6f7b6cc68"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [+3V3] on B.Cu, length 2.5100 mm",
+                    "pos": {
+                        "x": 6.85,
+                        "y": 8.5
+                    },
+                    "uuid": "d9276b4f-5339-4e8d-a5e1-3ab6f7b6cc68"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDP] on F.Cu, length 3.2000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 1.3
+                    },
+                    "uuid": "61049a13-3d57-436f-9e96-4d61d67b0b3b"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDP] on F.Cu, length 18.7000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 4.5
+                    },
+                    "uuid": "6a358703-6b66-405f-8720-228b1cf06b12"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [UDP] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 4.5
+                    },
+                    "uuid": "418737b1-d031-42c0-9eca-d426c6970073"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDM] on F.Cu, length 1.8000 mm",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 1.3
+                    },
+                    "uuid": "c033ff31-2cea-4746-bb73-db4fae6619e2"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Via [UDM] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 3.1
+                    },
+                    "uuid": "4de2e81c-22a4-4564-a2f1-24fa48ee0c72"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDM] on B.Cu, length 18.4950 mm",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 3.599999
+                    },
+                    "uuid": "1514099d-8fc4-4125-b8fa-63564688ca9c"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDM] on B.Cu, length 1.8500 mm",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 3.599999
+                    },
+                    "uuid": "68861d8b-ae31-477e-a3d2-e1d2af5f8d6f"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed",
+            "items": [
+                {
+                    "description": "Track [UDM] on B.Cu, length 0.5000 mm",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 3.1
+                    },
+                    "uuid": "6b016b9f-ad72-45d5-8dcc-a6f5c664d0dd"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "NPTH pad of USB1",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 2.4
+                    },
+                    "uuid": "fff05162-76f3-4520-9e28-90f08ba650c3"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "NPTH pad of USB1",
+                    "pos": {
+                        "x": 38.5,
+                        "y": 2.4
+                    },
+                    "uuid": "44a26cbd-ba87-48ed-a713-4a91291f8e00"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Pad 1 [VBUS] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 1.3
+                    },
+                    "uuid": "57879024-2bfb-436a-b72c-14c4f5a5be4f"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Pad 2 [UDM] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 1.3
+                    },
+                    "uuid": "093d5a07-40d7-46d1-8825-728310f30ebd"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Pad 3 [UDP] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 1.3
+                    },
+                    "uuid": "926c6ff9-9a32-4e56-b580-45dddc0860e5"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Pad 4 [<no net>] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 36.65,
+                        "y": 1.3
+                    },
+                    "uuid": "9e25e958-9f39-4670-9c06-b6a53360ba12"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Pad 5 [GND] of USB1 on F.Cu",
+                    "pos": {
+                        "x": 37.3,
+                        "y": 1.3
+                    },
+                    "uuid": "0bb36be4-fecf-453b-954c-b39ad44962ce"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.125,
+                        "y": 5.15
+                    },
+                    "uuid": "e7d13f68-7a09-4844-9459-f1889677acc9"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.275,
+                        "y": 1.35
+                    },
+                    "uuid": "b57e1e6b-dc23-497f-a516-9af229dd6902"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.875,
+                        "y": 5.15
+                    },
+                    "uuid": "68611d3a-92a8-4162-9fd3-d5f42eefc3b2"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Items not allowed (keepout area of U1)",
+            "items": [
+                {
+                    "description": "Footprint USB1",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 3.2
+                    },
+                    "uuid": "63b1b3fc-26c8-4b93-9d49-18fce3ceeb32"
+                }
+            ],
+            "severity": "error",
+            "type": "items_not_allowed"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
+            "items": [
+                {
+                    "description": "Via [UDM] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 3.1
+                    },
+                    "uuid": "4de2e81c-22a4-4564-a2f1-24fa48ee0c72"
+                },
+                {
+                    "description": "Track [VBUS] on F.Cu, length 3.2000 mm",
+                    "pos": {
+                        "x": 34.7,
+                        "y": 1.3
+                    },
+                    "uuid": "7d8d61fd-fd2d-450a-91e9-e790672cfbff"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
+            "items": [
+                {
+                    "description": "Via [UDM] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 35.35,
+                        "y": 3.1
+                    },
+                    "uuid": "4de2e81c-22a4-4564-a2f1-24fa48ee0c72"
+                },
+                {
+                    "description": "Track [UDP] on F.Cu, length 3.2000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 1.3
+                    },
+                    "uuid": "61049a13-3d57-436f-9e96-4d61d67b0b3b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)",
+            "items": [
+                {
+                    "description": "Track [UDP] on F.Cu, length 18.7000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 4.5
+                    },
+                    "uuid": "6a358703-6b66-405f-8720-228b1cf06b12"
+                },
+                {
+                    "description": "Via [UDM] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 35.275,
+                        "y": 22.095
+                    },
+                    "uuid": "7d2602c1-9d29-4c5b-a5ed-ae094911018c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets VSYS and GND)",
+            "items": [
+                {
+                    "description": "Pad 1 [VSYS] of D1 on F.Cu",
+                    "pos": {
+                        "x": 52.0,
+                        "y": 18.0
+                    },
+                    "uuid": "4918231f-8f67-4fcb-a896-eccb0f11dac8"
+                },
+                {
+                    "description": "Pad 2 [GND] of SW3 on F.Cu",
+                    "pos": {
+                        "x": 50.48,
+                        "y": 17.75
+                    },
+                    "uuid": "a4b006b3-53b1-428d-b641-db7966765f8a"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of SW1",
+                    "pos": {
+                        "x": 85.73,
+                        "y": 21.5
+                    },
+                    "uuid": "aebcbdab-8cf6-49fc-8dbd-3ec88203c284"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of SW1",
+                    "pos": {
+                        "x": 85.73,
+                        "y": 21.5
+                    },
+                    "uuid": "aebcbdab-8cf6-49fc-8dbd-3ec88203c284"
+                },
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of SW1",
+                    "pos": {
+                        "x": 85.73,
+                        "y": 18.5
+                    },
+                    "uuid": "ab4a7ca5-4572-4779-a030-6399d6b01f47"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of SW1",
+                    "pos": {
+                        "x": 85.73,
+                        "y": 18.5
+                    },
+                    "uuid": "ab4a7ca5-4572-4779-a030-6399d6b01f47"
+                },
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 7.87,
+                        "y": 41.5
+                    },
+                    "uuid": "abbf0234-8da2-4f3b-90d0-3bde91e83123"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 7.87,
+                        "y": 41.5
+                    },
+                    "uuid": "abbf0234-8da2-4f3b-90d0-3bde91e83123"
+                },
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 16.38,
+                        "y": 57.5
+                    },
+                    "uuid": "339d77f5-303b-4bf2-aec6-f6e2f82807c5"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 16.38,
+                        "y": 57.5
+                    },
+                    "uuid": "339d77f5-303b-4bf2-aec6-f6e2f82807c5"
+                },
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 71.62,
+                        "y": 41.5
+                    },
+                    "uuid": "c42f5f35-26bc-46a1-b28d-1ab2daae5e0b"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of BT1",
+                    "pos": {
+                        "x": 71.62,
+                        "y": 41.5
+                    },
+                    "uuid": "c42f5f35-26bc-46a1-b28d-1ab2daae5e0b"
+                },
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 18.0
+                    },
+                    "uuid": "1fa13c9d-9122-4eaf-81c6-c7d0f65b7099"
+                },
+                {
+                    "description": "Footprint SW3",
+                    "pos": {
+                        "x": 46.5,
+                        "y": 15.5
+                    },
+                    "uuid": "449af000-36b8-4af9-99dd-3a3befc5cf2b"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 18.0
+                    },
+                    "uuid": "1fa13c9d-9122-4eaf-81c6-c7d0f65b7099"
+                },
+                {
+                    "description": "Footprint C8",
+                    "pos": {
+                        "x": 56.0,
+                        "y": 16.0
+                    },
+                    "uuid": "46d52d3c-f250-4456-aa21-e452358c7229"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 41.5,
+                        "y": 40.0
+                    },
+                    "uuid": "2b711d92-ab5e-43ab-baed-1fae78c9e36e"
+                },
+                {
+                    "description": "Footprint BT1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 49.5
+                    },
+                    "uuid": "7ea39b7d-0a3a-4981-91e8-1cbba17eebfc"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R5",
+                    "pos": {
+                        "x": 33.0,
+                        "y": 47.5
+                    },
+                    "uuid": "32b8a521-7226-43b2-8335-e32c1867f344"
+                },
+                {
+                    "description": "Footprint BT1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 49.5
+                    },
+                    "uuid": "7ea39b7d-0a3a-4981-91e8-1cbba17eebfc"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint U3",
+                    "pos": {
+                        "x": 34.0,
+                        "y": 40.0
+                    },
+                    "uuid": "40ca8b22-ab38-4a9b-89a4-af5a859c94cb"
+                },
+                {
+                    "description": "Footprint BT1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 49.5
+                    },
+                    "uuid": "7ea39b7d-0a3a-4981-91e8-1cbba17eebfc"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 15.5
+                    },
+                    "uuid": "61c8b04d-8606-48be-82ad-c780e49adb74"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint USB1",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 3.2
+                    },
+                    "uuid": "63b1b3fc-26c8-4b93-9d49-18fce3ceeb32"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "items": [
+                {
+                    "description": "NPTH pad of USB1",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 2.4
+                    },
+                    "uuid": "fff05162-76f3-4520-9e28-90f08ba650c3"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "npth_inside_courtyard"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "items": [
+                {
+                    "description": "NPTH pad of USB1",
+                    "pos": {
+                        "x": 38.5,
+                        "y": 2.4
+                    },
+                    "uuid": "44a26cbd-ba87-48ed-a713-4a91291f8e00"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "npth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.125,
+                        "y": 5.15
+                    },
+                    "uuid": "e7d13f68-7a09-4844-9459-f1889677acc9"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.275,
+                        "y": 1.35
+                    },
+                    "uuid": "b57e1e6b-dc23-497f-a516-9af229dd6902"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.875,
+                        "y": 5.15
+                    },
+                    "uuid": "68611d3a-92a8-4162-9fd3-d5f42eefc3b2"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 19.5
+                    },
+                    "uuid": "711916bf-1a23-4182-92e5-8a29ae82ed79"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint BT1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 49.5
+                    },
+                    "uuid": "7ea39b7d-0a3a-4981-91e8-1cbba17eebfc"
+                },
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 28.5,
+                        "y": 44.0
+                    },
+                    "uuid": "c6a2fd88-dffa-4625-a1ca-78400d244712"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint U4",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 31.5
+                    },
+                    "uuid": "bba8b214-722c-4226-a4ac-565ccbcd1c63"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 16.0,
+                        "y": 15.0
+                    },
+                    "uuid": "ea921ab9-0d69-47f3-9a75-a713b979656f"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3500 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 8.0,
+                        "y": -0.699999
+                    },
+                    "uuid": "86a66bf9-0236-4d19-94da-8fc66e41fd1f"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3500 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "af43e502-6aa7-46a8-abc6-b84c37004207"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3500 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "Via [+3V3] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.16,
+                        "y": -0.699999
+                    },
+                    "uuid": "e4f968af-c409-4faa-9b55-b1c1ea48aa90"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "Track [+3V3] on B.Cu, length 34.4500 mm",
+                    "pos": {
+                        "x": 6.6,
+                        "y": -0.699999
+                    },
+                    "uuid": "ae36cb04-f8a3-4e28-bf69-655129267456"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3500 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 32.275,
+                        "y": 1.35
+                    },
+                    "uuid": "b57e1e6b-dc23-497f-a516-9af229dd6902"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3500 mm)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "599ac4e9-91d2-4cee-ac96-c11c37c9c0fa"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 13.1,
+                        "y": 16.76
+                    },
+                    "uuid": "fe9e3efd-793a-480e-9935-563ada9a0afd"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 13.1,
+                        "y": 18.16
+                    },
+                    "uuid": "28443f3b-d191-4b8b-9d9a-61c821163d25"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 13.8,
+                        "y": 16.06
+                    },
+                    "uuid": "0c44fed6-b02d-4725-82cb-2741225ae980"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 13.8,
+                        "y": 17.46
+                    },
+                    "uuid": "41fa87b2-2ba6-48a8-a924-30b416dd6af0"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 13.8,
+                        "y": 18.86
+                    },
+                    "uuid": "0916b211-e1da-47c7-80d3-90c56d653254"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 14.5,
+                        "y": 16.76
+                    },
+                    "uuid": "1c9c49ff-5e82-4221-8259-49eb20df5904"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 14.5,
+                        "y": 18.16
+                    },
+                    "uuid": "40776e1d-c613-4780-8221-1abbf4886380"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 15.2,
+                        "y": 16.06
+                    },
+                    "uuid": "9d2a3a4e-95ca-47fd-b382-cce6dede3059"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 15.2,
+                        "y": 17.46
+                    },
+                    "uuid": "be4e119c-1707-4d9c-90bb-b749e910f24a"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 15.2,
+                        "y": 18.86
+                    },
+                    "uuid": "a9a96284-48b7-471f-8800-95cf4ff5770a"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 15.9,
+                        "y": 16.76
+                    },
+                    "uuid": "6f8507be-53e8-4c9d-8453-58de641be562"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 39 [GND] of U1",
+                    "pos": {
+                        "x": 15.9,
+                        "y": 18.16
+                    },
+                    "uuid": "2bb5df24-5c13-4d49-b74c-cf114e9ac68c"
+                }
+            ],
+            "severity": "error",
+            "type": "drill_out_of_range"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer B.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                },
+                {
+                    "description": "Pad 2 [GND] of SW3 on F.Cu",
+                    "pos": {
+                        "x": 50.48,
+                        "y": 17.75
+                    },
+                    "uuid": "a4b006b3-53b1-428d-b641-db7966765f8a"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer B.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "970cc3e5-952a-4c13-93f8-e2466122e146"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.875,
+                        "y": 5.15
+                    },
+                    "uuid": "68611d3a-92a8-4162-9fd3-d5f42eefc3b2"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.725,
+                        "y": 1.35
+                    },
+                    "uuid": "37336fe3-90ad-4196-94ab-47441f138601"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 0.6,
+                        "y": 0.6
+                    },
+                    "uuid": "c1eff8f6-5175-49aa-a1da-c6f4d2147095"
+                },
+                {
+                    "description": "PTH pad SH [GND] of USB1",
+                    "pos": {
+                        "x": 39.875,
+                        "y": 5.15
+                    },
+                    "uuid": "68611d3a-92a8-4162-9fd3-d5f42eefc3b2"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Front solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Pad 1 [VSYS] of D1 on F.Cu",
+                    "pos": {
+                        "x": 52.0,
+                        "y": 18.0
+                    },
+                    "uuid": "4918231f-8f67-4fcb-a896-eccb0f11dac8"
+                },
+                {
+                    "description": "Pad 2 [GND] of SW3 on F.Cu",
+                    "pos": {
+                        "x": 50.48,
+                        "y": 17.75
+                    },
+                    "uuid": "a4b006b3-53b1-428d-b641-db7966765f8a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

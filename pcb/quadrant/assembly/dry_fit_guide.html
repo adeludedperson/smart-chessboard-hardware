@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dry-Fit Guide — Chess Quadrant PCB</title>
+<style>
+  :root{--bg:#12151a;--card:#1c2129;--ink:#e8ecf2;--dim:#9aa5b3;--line:#2b323d;
+        --sensor:#ff5d5d;--res:#ffc24b;--cap:#5db7ff;--ic:#b58cff;--hdr:#5dffa9}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"Segoe UI",Roboto,sans-serif;padding:20px}
+  h1{font-size:24px;margin-bottom:4px}
+  .sub{color:var(--dim);margin-bottom:18px}
+  .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+  .boards{flex:1 1 640px;display:flex;flex-wrap:wrap;gap:20px}
+  .bcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;flex:1 1 300px}
+  .bcard h2{font-size:15px;margin-bottom:2px}
+  .bcard p{color:var(--dim);font-size:12px;margin-bottom:8px}
+  svg{width:100%;height:auto;display:block;background:#0d3321;border-radius:6px}
+  .legend{flex:0 1 360px;display:flex;flex-direction:column;gap:10px}
+  .item{background:var(--card);border:1px solid var(--line);border-left:6px solid;border-radius:8px;padding:10px 12px;cursor:pointer}
+  .item.dimmed{opacity:.35}
+  .item h3{font-size:14px}
+  .item .qty{float:right;color:var(--dim);font-weight:400;font-size:12px}
+  .item .prod{font-size:12px;color:var(--dim);margin:2px 0}
+  .item .prod b{color:var(--ink)}
+  .item .look{font-size:12px;margin-top:4px}
+  .item .warn{font-size:12px;color:#ff8a8a;margin-top:4px}
+  .missing{border:2px dashed #ff8a8a}
+  .note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:18px;max-width:1040px}
+  .note h2{font-size:15px;margin-bottom:6px}
+  .note ol{margin-left:18px}
+  .note li{margin-bottom:4px}
+  #tip{position:fixed;pointer-events:none;background:#000d;color:#fff;padding:6px 10px;border-radius:6px;
+       font-size:12px;display:none;z-index:9;max-width:240px}
+  text{font-family:inherit;pointer-events:none}
+</style>
+</head>
+<body>
+<h1>Dry-Fit Guide — one quadrant board</h1>
+<p class="sub">Push parts into their holes — no soldering, they'll sit loose. Tap a part in the legend to highlight it on the board. Hover any shape for its name.</p>
+
+<div class="wrap">
+  <div class="boards">
+    <div class="bcard">
+      <h2>TOP side — 30 parts</h2>
+      <p>Board flat on table, "J1 IN" label on your left.</p>
+      <svg id="top" viewBox="-8 -8 216 216"></svg>
+    </div>
+    <div class="bcard">
+      <h2>BOTTOM side — 16 sensors</h2>
+      <p>Board flipped left↔right, like turning a page. Sensor labels S0–S15 are printed on this side.</p>
+      <svg id="bot" viewBox="-8 -8 216 216"></svg>
+    </div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+</div>
+
+<div class="note">
+  <h2>Dry-fit rules</h2>
+  <ol>
+    <li><b>Resistor legs need bending:</b> bend both wires down 90° so the bends are ~10mm apart, then drop in.</li>
+    <li><b>IC legs need a squeeze:</b> DIP legs splay outward from the factory. Press each row gently against the table to angle them straight, then insert. Match the chip's notch to the notch drawn on the board.</li>
+    <li><b>Sensors:</b> TEXT side of the package faces the FLAT side of the printed outline (yes — that's backwards vs normal; your clones are mirror-pinout). Bottom side of the board.</li>
+    <li><b>Never force.</b> Everything drops in with light pressure. If it doesn't, wrong part or wrong spot.</li>
+    <li>When done, compare against <b>render_top_50mm.png</b> / <b>render_bottom_50mm.png</b> — they show the finished board.</li>
+  </ol>
+</div>
+
+<div id="tip"></div>
+
+<script>
+const P = [
+ // ref, x, y(+down), rot, side, kind
+ ...[..."0123456789ABCDEF"].map((h,i)=>({ref:"S"+i, x:[26.27,76.27,126.27,176.27][i%4], y:[25,75,125,175][Math.floor(i/4)], rot:180, side:"bot", kind:"sensor"})),
+ ...Array.from({length:16},(_,i)=>({ref:"R"+i, x:[19.5,69.5,119.5,169.5][i%4], y:[35,85,135,185][Math.floor(i/4)], rot:0, side:"top", kind:"res"})),
+ ...[[0,11.5,14],[1,188.5,14],[2,11.5,64],[3,188.5,64],[4,11.5,114],[5,188.5,114],[6,11.5,164],[7,188.5,164]].map(([i,x,y])=>({ref:"C"+i,x,y,rot:90,side:"top",kind:"cap"})),
+ {ref:"C8",x:47.5,y:109,rot:0,side:"top",kind:"cap"},
+ {ref:"C9",x:147.5,y:109,rot:0,side:"top",kind:"cap"},
+ {ref:"U1",x:50,y:104.81,rot:90,side:"top",kind:"ic"},
+ {ref:"U2",x:150,y:104.81,rot:90,side:"top",kind:"ic"},
+ {ref:"J1",x:4.5,y:94.65,rot:90,side:"top",kind:"hdr"},
+ {ref:"J2",x:195.5,y:94.65,rot:90,side:"top",kind:"hdr"},
+];
+
+const KINDS = {
+ sensor:{c:"var(--sensor)",name:"Hall sensor — A3144",qty:"16 (bag 1)",
+   prod:'QuartzComponents "<b>A3144 Hall Effect Sensor</b>" (SKU MOD-QC0264) — the ₹8 ones, ~94 in the bag',
+   look:"Small black half-cylinder, 3 legs, tiny text on the curved face.",
+   warn:"BOTTOM side · text side faces the FLAT of the outline · only use screened ones"},
+ res:{c:"var(--res)",name:"Resistor 10kΩ ¼W",qty:"16 (bag 2)",
+   prod:'QuartzComponents "<b>10K ohm 1/4 Watt Resistor</b>" (packs of 10 — you have 120)',
+   look:"Beige cylinder, color bands: BROWN·BLACK·ORANGE·gold. Either direction fine.",
+   warn:"Don't grab the 330Ω pack by mistake — those are ORANGE·ORANGE·BROWN"},
+ cap:{c:"var(--cap)",name:"Capacitor 100nF ceramic",qty:"10 (bag 3)",
+   prod:'QuartzComponents "<b>10000pF / 0.1uF Ceramic Capacitor</b>" (packs of 5 — you have 80)',
+   look:'Tiny disc/lentil marked "<b>104</b>", 2 legs. Either direction fine.',
+   warn:"NOT the big 1000µF cylinders — those aren't for this board"},
+ ic:{c:"var(--ic)",name:"Shift register 74HC165 (DIP-16)",qty:"2 (bag 4)",
+   prod:'QuartzComponents "<b>SN74HC165N DIP16</b>" — you have 12',
+   look:"Black chip, 16 legs, printed SN74HC165N.",
+   warn:"Notch on the chip must match the notch on the board drawing"},
+ hdr:{c:"var(--hdr)",name:"Pin header 1×6 male, 2.54mm",qty:"2 — ⚠ NOT BOUGHT",
+   prod:"Not in any order — J1/J2 are empty holes for now",
+   look:"Black plastic strip with 6 metal pins. Any 40-pin 'breakaway male header' snaps to size.",
+   warn:"Get from the solder shop (~₹10) or any electronics store. Dry-fit works without them."},
+};
+
+const tip = document.getElementById("tip");
+let sel = null;
+
+function draw(svgId, side){
+  const svg = document.getElementById(svgId);
+  const mir = side==="bot";
+  let s = `<rect x="0" y="0" width="200" height="200" rx="2" fill="#0f4a2e" stroke="#083920" stroke-width="1.5"/>`;
+  // 50mm square grid
+  for(let i=1;i<4;i++) s+=`<line x1="${i*50}" y1="0" x2="${i*50}" y2="200" stroke="#0a3d26" stroke-width=".6"/>
+                           <line y1="${i*50}" x1="0" y2="${i*50}" x2="200" stroke="#0a3d26" stroke-width=".6"/>`;
+  // mounting holes
+  [[5,5],[195,5],[5,195],[195,195]].forEach(([x,y])=>s+=`<circle cx="${x}" cy="${y}" r="1.6" fill="#12151a"/>`);
+  for(const p of P){
+    if((p.side==="bot")!==mir) continue;
+    const x = mir ? 200-p.x : p.x, y = p.y, k = KINDS[p.kind];
+    let body="";
+    const vert = p.rot===90||p.rot===-90;
+    if(p.kind==="sensor")
+      body=`<circle cx="${x}" cy="${y}" r="3.2" fill="${k.c}"/><line x1="${x-2.6}" y1="${y+2}" x2="${x+2.6}" y2="${y+2}" stroke="#7a1f1f" stroke-width="1"/>`;
+    if(p.kind==="res")
+      body=`<rect x="${x-3.2}" y="${y-1.3}" width="6.4" height="2.6" rx="1.2" fill="${k.c}"/><line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="${k.c}" stroke-width=".7"/>`;
+    if(p.kind==="cap")
+      body=`<circle cx="${x}" cy="${y}" r="2.4" fill="${k.c}"/>`;
+    if(p.kind==="ic")
+      body= vert ? `<rect x="${x-3.7}" y="${y-10}" width="7.4" height="20" rx="1" fill="${k.c}"/>`
+                 : `<rect x="${x-10}" y="${y-3.7}" width="20" height="7.4" rx="1" fill="${k.c}"/>`;
+    if(p.kind==="hdr"){
+      body=`<rect x="${x-1.6}" y="${y-7.6}" width="3.2" height="15.2" fill="${k.c}"/>`;
+      for(let i=0;i<6;i++) body+=`<circle cx="${x}" cy="${y-6.35+i*2.54}" r=".7" fill="#12151a"/>`;
+    }
+    const ly = p.kind==="ic" ? y : y - (p.kind==="sensor"?4.6:(vert?9:3.4));
+    s+=`<g class="part" data-kind="${p.kind}" data-ref="${p.ref}">${body}
+        <text x="${x}" y="${ly}" text-anchor="middle" font-size="4.2" fill="#dfe8e0" font-weight="600"${p.kind==="ic"?' transform="rotate(-90 '+x+' '+y+')" dominant-baseline="middle"':''}>${p.ref}</text></g>`;
+  }
+  svg.innerHTML = s;
+}
+draw("top","top"); draw("bot","bot");
+
+// legend
+const leg = document.getElementById("legend");
+for(const [kind,k] of Object.entries(KINDS)){
+  const d = document.createElement("div");
+  d.className = "item"+(kind==="hdr"?" missing":""); d.style.borderLeftColor = getComputedStyle(document.documentElement).getPropertyValue(k.c.slice(4,-1)) || "";
+  d.style.borderLeftColor = k.c;
+  d.innerHTML = `<h3>${k.name}<span class="qty">${k.qty}</span></h3>
+    <p class="prod">${k.prod}</p><p class="look">👀 ${k.look}</p>${k.warn?`<p class="warn">⚠ ${k.warn}</p>`:""}`;
+  d.onclick = ()=>{ sel = sel===kind?null:kind; update(); };
+  d.dataset.kind = kind;
+  leg.appendChild(d);
+}
+function update(){
+  document.querySelectorAll(".item").forEach(el=>el.classList.toggle("dimmed", sel&&el.dataset.kind!==sel));
+  document.querySelectorAll(".part").forEach(el=>el.style.opacity = (sel&&el.dataset.kind!==sel)?.18:1);
+}
+// tooltip
+document.addEventListener("mousemove",e=>{
+  const g = e.target.closest?.(".part");
+  if(g){ const k=KINDS[g.dataset.kind];
+    tip.style.display="block"; tip.style.left=(e.clientX+14)+"px"; tip.style.top=(e.clientY+14)+"px";
+    tip.innerHTML=`<b>${g.dataset.ref}</b> — ${k.name}`;
+  } else tip.style.display="none";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hall sensor on the board — 3D</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --line:#2a323d; --ink:#e6edf3; --dim:#8b98a5;
+    --acc:#4da3ff; --warn:#ff5c5c; --ok:#3fd07f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+  #app{display:flex;height:100%}
+  #side{width:330px;flex:0 0 330px;background:var(--panel);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;overflow:hidden}
+  #view{flex:1;position:relative;min-width:0}
+  canvas{display:block}
+  h1{font-size:15px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line);letter-spacing:.3px}
+  h1 small{display:block;color:var(--dim);font-weight:400;font-size:12px;margin-top:3px}
+  #steps{overflow-y:auto;flex:1;padding:8px}
+  .step{padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid transparent;margin-bottom:4px}
+  .step:hover{background:#1c232c}
+  .step.on{background:#12233a;border-color:#1f4b7a}
+  .step .n{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;
+    border-radius:50%;background:#2a323d;color:var(--dim);font-size:11px;margin-right:8px}
+  .step.on .n{background:var(--acc);color:#04121f}
+  .step .t{font-weight:600}
+  .step .d{color:var(--dim);font-size:12.5px;margin-top:6px;display:none}
+  .step.on .d{display:block}
+  .step .d b{color:var(--ink)}
+  .step .d .warn{color:var(--warn);font-weight:600}
+  .step .d .ok{color:var(--ok);font-weight:600}
+  #ctl{border-top:1px solid var(--line);padding:10px;display:flex;gap:6px;flex-wrap:wrap}
+  button{background:#222b36;color:var(--ink);border:1px solid var(--line);border-radius:7px;
+    padding:7px 11px;cursor:pointer;font-size:12.5px}
+  button:hover{background:#2c3846;border-color:#3d4a5a}
+  button.pri{background:var(--acc);border-color:var(--acc);color:#04121f;font-weight:600}
+  button.on{background:#12233a;border-color:var(--acc);color:var(--acc)}
+  button.danger.on{background:#2c1414;border-color:var(--warn);color:var(--warn)}
+  #hud{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap;z-index:5}
+  #tag{position:absolute;bottom:12px;left:12px;color:var(--dim);font-size:12px;
+    background:rgba(14,17,22,.75);padding:6px 10px;border-radius:6px;border:1px solid var(--line)}
+  #alert{position:absolute;top:12px;right:12px;max-width:280px;background:#2c1414;color:#ffd0d0;
+    border:1px solid var(--warn);border-radius:8px;padding:10px 12px;font-size:12.5px;display:none;z-index:5}
+  #alert.show{display:block}
+  #cheat{position:absolute;right:12px;bottom:12px;z-index:6;background:rgba(16,20,26,.94);
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px 8px;width:430px}
+  #cheat h2{margin:0 0 6px;font-size:12px;letter-spacing:.4px;color:var(--dim);text-transform:uppercase}
+  #cheat .row{display:flex;gap:8px}
+  #cheat figure{margin:0;flex:1}
+  #cheat figcaption{font-size:11px;color:var(--dim);text-align:center;margin-top:2px}
+  #cheat.hide{display:none}
+  #cheatBtn{position:absolute;right:12px;bottom:12px;z-index:6;display:none}
+  #cheatBtn.show{display:block}
+  @media (max-width:800px){#app{flex-direction:column}#side{width:100%;flex:0 0 46%}}
+</style>
+<script type="importmap">
+{"imports":{
+  "three":"https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="side">
+    <h1>Hall sensor → PCB
+      <small>A3144 on the chess quadrant board · drag to rotate · scroll to zoom</small></h1>
+    <div id="steps"></div>
+    <div id="ctl">
+      <button id="prev">‹ Back</button>
+      <button id="next" class="pri">Next ›</button>
+      <button id="play">▶ Play all</button>
+      <button id="wrong" class="danger">Show wrong way</button>
+      <button id="all">Show all 16</button>
+    </div>
+  </div>
+  <div id="view">
+    <div id="hud">
+      <button data-cam="iso">Angled</button>
+      <button data-cam="under">From below</button>
+      <button data-cam="top">Top face</button>
+      <button data-cam="bottom">Bottom face</button>
+      <button data-cam="side">Side / edge</button>
+    </div>
+    <div id="alert"></div>
+    <div id="tag"></div>
+    <button id="cheatBtn">Show cheat sheet</button>
+    <div id="cheat">
+      <h2>The direction rule &nbsp;·&nbsp; <span style="color:#4da3ff;cursor:pointer" id="cheatX">hide</span></h2>
+      <div class="row">
+        <figure>
+          <svg viewBox="0 0 170 132" width="100%">
+            <circle cx="85" cy="48" r="44" fill="none" stroke="#6f8ea0" stroke-width="1.2"
+                    stroke-dasharray="5 5" opacity=".6"/>
+            <path d="M61,38 A25,25 0 1 0 109,38 Z" fill="none" stroke="#fff" stroke-width="2"/>
+            <path d="M75.3,57 A12,12 0 1 1 94.7,57 Z" fill="#14181d" stroke="#4da3ff" stroke-width="1.6"/>
+            <text x="85" y="52" fill="#c9d3dc" font-size="7.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif" font-weight="700">3144</text>
+            <circle cx="79" cy="57" r="2" fill="#d8b25a"/><circle cx="85" cy="57" r="2" fill="#d8b25a"/>
+            <circle cx="91" cy="57" r="2" fill="#d8b25a"/>
+            <text x="85" y="22" fill="#fff" font-size="8.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif">outline: STRAIGHT edge ↑</text>
+            <text x="85" y="88" fill="#8b98a5" font-size="8.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif">outline: ARC ↓</text>
+            <text x="85" y="120" fill="#4da3ff" font-size="8.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif">text/curved face → straight edge</text>
+          </svg>
+          <figcaption>looking at the BOTTOM face</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 170 132" width="100%">
+            <rect x="10" y="42" width="150" height="9" fill="#1f6b46" stroke="#14503a"/>
+            <text x="85" y="36" fill="#9fd0ff" font-size="8.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif">TOP face · solder here</text>
+            <path d="M41.3,74 A14,14 0 1 1 62.7,74 Z" fill="#14181d" stroke="#4da3ff" stroke-width="1.6"/>
+            <line x1="33" y1="70" x2="33" y2="38" stroke="#cfd6dd" stroke-width="1.6"/>
+            <line x1="33" y1="70" x2="44" y2="70" stroke="#cfd6dd" stroke-width="1.6"/>
+            <path d="M29,42 L33,35 L37,42 Z" fill="#dfe6ec"/>
+            <text x="70" y="61" fill="#4da3ff" font-size="7.5" font-family="-apple-system,sans-serif">← curved "3144" face</text>
+            <text x="70" y="70" fill="#4da3ff" font-size="7.5" font-family="-apple-system,sans-serif">&#160;&#160; touches the PCB</text>
+            <text x="70" y="84" fill="#8b98a5" font-size="7.5" font-family="-apple-system,sans-serif">← blank flat face, down</text>
+            <text x="85" y="120" fill="#ffd79f" font-size="8.5" text-anchor="middle"
+                  font-family="-apple-system,sans-serif">BOTTOM face · body lies flat</text>
+          </svg>
+          <figcaption>side view, after folding</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+// ---------------------------------------------------------------- constants
+// everything in millimetres, real dimensions from the KiCad design
+const PCB_T   = 1.6;      // board thickness
+const TOP_Y   =  PCB_T/2; // y of top face
+const BOT_Y   = -PCB_T/2; // y of bottom face
+const PITCH   = 50;       // square pitch
+const LEG_P   = 2.54;     // leg pitch of the TO-92
+const HOLE_R  = 0.5;
+const KEEP_R  = 8;        // copper keep-out radius drawn on the silk
+const BODY_R  = 2.3;      // TO-92 curved radius
+const BODY_F  = 1.5;      // flat face distance from axis
+const BODY_H  = 4.2;      // package height
+const GAP     = 0.6;      // body top → board bottom while standing
+const LEG_FULL= 17;       // leg length as supplied
+const LEG_CUT = 6.0;      // leg length after clipping
+
+// ---------------------------------------------------------------- scene
+const view = document.getElementById('view');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0e1116);
+scene.fog = new THREE.Fog(0x0e1116, 220, 620);
+
+const camera = new THREE.PerspectiveCamera(40, 1, 1, 2000);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+view.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+
+scene.add(new THREE.HemisphereLight(0xbcd6ff, 0x1a2028, 1.15));
+const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(60,90,70); scene.add(key);
+const fill= new THREE.DirectionalLight(0x9fc4ff, .7); fill.position.set(-70,-60,-40); scene.add(fill);
+const rim = new THREE.DirectionalLight(0xffffff, .5); rim.position.set(0,-90,30); scene.add(rim);
+
+// ---------------------------------------------------------------- materials
+const M = {
+  pcb   : new THREE.MeshStandardMaterial({color:0x1f6b46, roughness:.55, metalness:.05}),
+  pcbEdge:new THREE.MeshStandardMaterial({color:0x14503a, roughness:.7}),
+  hole  : new THREE.MeshStandardMaterial({color:0x0a0d10, roughness:.9}),
+  pad   : new THREE.MeshStandardMaterial({color:0xd8b25a, roughness:.35, metalness:.85}),
+  silk  : new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:.85}),
+  silkD : new THREE.LineBasicMaterial({color:0x6f8ea0, transparent:true, opacity:.5}),
+  body  : new THREE.MeshStandardMaterial({color:0x14181d, roughness:.6}),
+  bodyBad:new THREE.MeshStandardMaterial({color:0x5c1414, roughness:.6}),
+  bodyHot:new THREE.MeshStandardMaterial({color:0x14181d, roughness:.6,
+            emissive:0x2f7fff, emissiveIntensity:.9}),
+  leg   : new THREE.MeshStandardMaterial({color:0xcfd6dd, roughness:.3, metalness:.9}),
+  solder: new THREE.MeshStandardMaterial({color:0xdfe6ec, roughness:.28, metalness:.9}),
+  res   : new THREE.MeshStandardMaterial({color:0xd9cba3, roughness:.6}),
+  mdf   : new THREE.MeshStandardMaterial({color:0xc9a273, roughness:.9, transparent:true, opacity:.55}),
+  piece : new THREE.MeshStandardMaterial({color:0xf0ece2, roughness:.5}),
+  mag   : new THREE.MeshStandardMaterial({color:0xc3ccd4, roughness:.35, metalness:.4}),
+  field : new THREE.MeshBasicMaterial({color:0x4da3ff, transparent:true, opacity:.16,
+            depthWrite:false, side:THREE.DoubleSide}),
+};
+
+// ---------------------------------------------------------------- helpers
+function labelSprite(text, color='#e6edf3', px=54){
+  const c = document.createElement('canvas'), g = c.getContext('2d');
+  g.font = `600 ${px}px -apple-system,Segoe UI,Roboto,sans-serif`;
+  const w = Math.ceil(g.measureText(text).width)+28;
+  c.width = w; c.height = px+24;
+  const g2 = c.getContext('2d');
+  g2.font = `600 ${px}px -apple-system,Segoe UI,Roboto,sans-serif`;
+  g2.fillStyle = 'rgba(10,13,17,.72)';
+  roundRect(g2,0,0,c.width,c.height,14); g2.fill();
+  g2.fillStyle = color; g2.textBaseline='middle';
+  g2.fillText(text, 14, c.height/2+2);
+  const t = new THREE.CanvasTexture(c); t.anisotropy = 8;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({map:t, depthTest:false, transparent:true}));
+  s.scale.set(c.width/px*1.45, c.height/px*1.45, 1);
+  s.renderOrder = 999;
+  return s;
+}
+function roundRect(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);
+  g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+
+function circleLine(r, mat, seg=96){
+  const pts=[]; for(let i=0;i<=seg;i++){const a=i/seg*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*r,0,Math.sin(a)*r));}
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat);
+}
+// Bottom-side silkscreen for one square, drawn as a crisp decal.
+// Straight edge of the D faces world +Z — that is the side the printed face must point at.
+const SILK_SPAN = 40;                       // mm covered by the decal
+function silkTexture(name){
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const g = c.getContext('2d'), mid = 256, mm = 512/SILK_SPAN;
+  g.strokeStyle = 'rgba(150,190,215,.45)'; g.lineWidth = 3; g.setLineDash([12,10]);
+  g.beginPath(); g.arc(mid, mid, KEEP_R*mm, 0, Math.PI*2); g.stroke(); g.setLineDash([]);
+  const r = 3.35*mm, f = 2.15*mm, A = Math.asin(f/r);
+  g.strokeStyle = '#ffffff'; g.lineWidth = 5; g.lineJoin = 'round';
+  g.beginPath(); g.arc(mid, mid, r, -A, Math.PI + A, false); g.closePath(); g.stroke();
+  g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = '700 46px -apple-system,Segoe UI,Roboto,sans-serif';
+  g.fillText(name, mid + KEEP_R*mm + 34, mid);
+  g.fillStyle = 'rgba(255,255,255,.75)';
+  g.font = '600 26px -apple-system,Segoe UI,Roboto,sans-serif';
+  g.fillText('straight edge', mid, mid - r - 22);
+  const t = new THREE.CanvasTexture(c); t.anisotropy = 8; return t;
+}
+function silkDecal(name){
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(SILK_SPAN, SILK_SPAN),
+    new THREE.MeshBasicMaterial({map:silkTexture(name), transparent:true, depthWrite:false}));
+  m.rotation.x = Math.PI/2;                 // normal points down, reads correctly from below
+  return m;
+}
+function cylBetween(mesh, a, b, radius){
+  const dir = new THREE.Vector3().subVectors(b,a);
+  const len = dir.length();
+  if(len < 1e-4){ mesh.visible=false; return; }
+  mesh.visible = true;
+  mesh.position.copy(a).addScaledVector(dir, .5);
+  mesh.scale.set(radius, len, radius);
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.normalize());
+}
+const UNIT_CYL = new THREE.CylinderGeometry(1,1,1,14);
+
+// ---------------------------------------------------------------- board
+let board = null;
+function buildBoard(n){                     // n = 1 or 4 (squares per side)
+  if(board){ scene.remove(board); board.traverse(o=>{o.geometry?.dispose?.();}); }
+  board = new THREE.Group();
+  const size = n===1 ? 60 : PITCH*4;
+  const slab = new THREE.Mesh(new THREE.BoxGeometry(size, PCB_T, size), M.pcb);
+  board.add(slab);
+
+  const centres = [];
+  if(n===1) centres.push([0,0,'S0']);
+  else{
+    for(let r=0;r<4;r++) for(let c=0;c<4;c++){
+      const i = r*4+c;
+      centres.push([ (c-1.5)*PITCH, (r-1.5)*PITCH, 'S'+i ]);
+    }
+  }
+  for(const [cx,cz,name] of centres){
+    // keep-out ring + D outline on the BOTTOM face (sensor side)
+    const d = silkDecal(name); d.position.set(cx, BOT_Y-0.04, cz); board.add(d);
+    // holes + pads on both faces
+    for(let i=0;i<3;i++){
+      const x = cx + (i-1)*LEG_P;
+      const h = new THREE.Mesh(new THREE.CylinderGeometry(HOLE_R,HOLE_R,PCB_T+.3,16), M.hole);
+      h.position.set(x,0,cz); board.add(h);
+      for(const y of [TOP_Y+.01, BOT_Y-.01]){
+        const p = new THREE.Mesh(new THREE.CylinderGeometry(1.0,1.0,.06,20), M.pad);
+        p.position.set(x,y,cz); board.add(p);
+      }
+    }
+    // the matching resistor footprint on the TOP face, so the top looks right
+    const rb = new THREE.Mesh(new THREE.BoxGeometry(6.3,1.9,2.2), M.res);
+    rb.position.set(cx, TOP_Y+1.0, cz+9); board.add(rb);
+    for(const dx of [-4.6,4.6]){
+      const lg = new THREE.Mesh(new THREE.BoxGeometry(2.6,.4,.4), M.leg);
+      lg.position.set(cx+dx, TOP_Y+1.0, cz+9); board.add(lg);
+    }
+    if(n===1){
+      const rl = labelSprite('R'+name.slice(1)+'  (pull-up resistor)', '#d9cba3', 40);
+      rl.position.set(cx+14, TOP_Y+4, cz+9); board.add(rl);
+    }
+  }
+  // face tags
+  const tTop = labelSprite('TOP FACE · solder side', '#9fd0ff', 44);
+  tTop.position.set(-size/2+10, TOP_Y+10, -size/2-3); board.add(tTop);
+  const tBot = labelSprite('BOTTOM FACE · sensors', '#ffd79f', 44);
+  tBot.position.set(-size/2+10, BOT_Y-10, -size/2-3); board.add(tBot);
+
+  scene.add(board);
+  return size;
+}
+
+// ---------------------------------------------------------------- sensor
+function makeSensorBody(){
+  // D cross-section: flat face at -Z(local), curved bulge toward +Z(local)
+  const s = new THREE.Shape();
+  const a0 = Math.asin(BODY_F/BODY_R);
+  s.moveTo(-Math.cos(a0)*BODY_R, -BODY_F);
+  // sweep the LONG way, over the +Y side, so the bulge is the curved face
+  s.absarc(0,0,BODY_R, Math.PI+a0, -a0, true);
+  s.lineTo(-Math.cos(a0)*BODY_R, -BODY_F);
+  const g = new THREE.ExtrudeGeometry(s,{depth:BODY_H, bevelEnabled:true,
+              bevelSize:.16, bevelThickness:.16, bevelSegments:2, curveSegments:40});
+  g.rotateX(Math.PI/2);            // shape +Y → world +Z, extrusion → world -Y
+  return g;
+}
+const BODY_GEO = makeSensorBody();
+
+function textTexture(){
+  const c = document.createElement('canvas'); c.width=256; c.height=160;
+  const g = c.getContext('2d');
+  g.fillStyle = '#14181d'; g.fillRect(0,0,256,160);
+  g.fillStyle = '#c9d3dc'; g.textAlign='center';
+  g.font='700 70px -apple-system,Segoe UI,Roboto,sans-serif';
+  g.fillText('3144', 128, 76);
+  g.font='500 46px -apple-system,Segoe UI,Roboto,sans-serif';
+  g.fillText('402', 128, 130);
+  const t = new THREE.CanvasTexture(c); t.anisotropy=8; return t;
+}
+const TEXT_MAT = new THREE.MeshStandardMaterial({map:textTexture(), roughness:.6});
+
+function makeSensor(){
+  const pivot = new THREE.Group();          // origin = leg row at the board's bottom face
+  const yaw   = new THREE.Group();          // 180° flip for the "wrong way" demo
+  pivot.add(yaw);
+
+  const body = new THREE.Mesh(BODY_GEO, M.body);
+  body.position.y = -GAP;                   // extrudes downward from here
+  yaw.add(body);
+
+  // printed face — wraps the CURVED side, because that is where these clones print it
+  const txt = new THREE.Mesh(
+    new THREE.CylinderGeometry(BODY_R+0.30, BODY_R+0.30, 2.7, 28, 1, true, -0.62, 1.24),
+    TEXT_MAT);
+  txt.position.set(0, -GAP-BODY_H/2, 0);
+  yaw.add(txt);
+  // blank flat face, called out with a slightly lighter panel
+  const flat = new THREE.Mesh(new THREE.PlaneGeometry(3.6,2.8),
+    new THREE.MeshStandardMaterial({color:0x232a31, roughness:.75}));
+  flat.position.set(0, -GAP-BODY_H/2, -BODY_F-0.26);
+  flat.rotation.y = Math.PI;
+  yaw.add(flat);
+
+  // legs, rebuilt every frame (they bend)
+  const legs = [];
+  for(let i=0;i<3;i++){
+    const a = new THREE.Mesh(UNIT_CYL, M.leg);
+    const b = new THREE.Mesh(UNIT_CYL, M.leg);
+    pivot.add(a); pivot.add(b); legs.push([a,b]);
+  }
+  // solder cones on the TOP face — world space, never tips with the body
+  const sold = [];
+  for(let i=0;i<3;i++){
+    const m = new THREE.Mesh(new THREE.ConeGeometry(1.3,1.6,20), M.solder);
+    m.visible = false; scene.add(m); sold.push(m);
+  }
+  return {pivot, yaw, body, txt, legs, sold};
+}
+
+// ---------------------------------------------------------------- state
+const S = { ins:0, tip:0, sold:0, clip:0, use:0, wrong:0 };
+const T = Object.assign({}, S);            // targets
+let sensors = [], mainSensor = null, boardSize = 60, mode = 1;
+
+function spawnSensors(n){
+  for(const s of sensors){ scene.remove(s.pivot); for(const m of s.sold) scene.remove(m); }
+  sensors = [];
+  const list = n===1 ? [[0,0]] : (()=>{const a=[];for(let r=0;r<4;r++)for(let c=0;c<4;c++)
+      a.push([(c-1.5)*PITCH,(r-1.5)*PITCH]); return a;})();
+  for(const [x,z] of list){
+    const s = makeSensor();
+    s.home = new THREE.Vector3(x, BOT_Y, z);
+    scene.add(s.pivot); sensors.push(s);
+  }
+  mainSensor = sensors[0];
+}
+
+// magnet / MDF / piece rig, only shown in the last step
+const rig = new THREE.Group(); scene.add(rig);
+{
+  const mdf = new THREE.Mesh(new THREE.BoxGeometry(60,4,60), M.mdf);
+  mdf.position.y = TOP_Y + 6;  rig.add(mdf); rig.mdf = mdf;      // 4mm MDF, 4mm air gap
+  const pc = new THREE.Mesh(new THREE.CylinderGeometry(7,10,24,32), M.piece);
+  rig.add(pc); rig.piece = pc;
+  const mg = new THREE.Mesh(new THREE.CylinderGeometry(5,5,3,32), M.mag);
+  rig.add(mg); rig.mag = mg;
+  const fd = new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,20,24,1,true), M.field);
+  rig.add(fd); rig.field = fd;
+  const lb = labelSprite('magnet in the piece base', '#ffd79f', 40);
+  lb.position.set(26, TOP_Y+12, 0); rig.add(lb); rig.lab = lb;
+}
+rig.visible = false;
+
+// explode-view annotations for step 1
+const notes = new THREE.Group(); scene.add(notes);
+{
+  const a = labelSprite('printed "3144" face', '#9fd0ff', 40);
+  a.position.set(17, -28, 10); notes.add(a);
+  const b = labelSprite('blank flat face', '#8b98a5', 40);
+  b.position.set(-17, -28, -10); notes.add(b);
+  const c = labelSprite('3 legs · 2.54 mm apart', '#8b98a5', 40);
+  c.position.set(0, -13, 0); notes.add(c);
+}
+notes.visible = false;
+
+// ---------------------------------------------------------------- per-frame layout
+function layoutSensor(s, st){
+  const {pivot, yaw, body, txt, legs, sold} = s;
+
+  // 1. drop-in position: far below when st.ins = 0, seated when 1
+  const drop = (1-st.ins) * 17;
+  const tipA = st.tip * Math.PI/2;            // 0 → 90°
+  const sink = st.tip * (BODY_R - 0.05);      // settle so the printed face kisses the board
+
+  pivot.position.set(s.home.x, s.home.y - drop - sink, s.home.z);
+  pivot.rotation.x = -tipA;                   // tips toward +Z = the straight edge side
+  yaw.rotation.y   = st.wrong * Math.PI;      // 180° = the destructive orientation
+
+  body.material = st.wrong > .5 ? M.bodyBad
+                : (st.use > .5 ? M.bodyHot : M.body);
+  txt.visible = st.wrong < .5;
+
+  // 2. legs: walk a polyline from the body up through the hole
+  const legLen = LEG_FULL - st.clip*(LEG_FULL-LEG_CUT);
+  const inv = new THREE.Matrix4().copy(pivot.matrixWorld).invert();
+  for(let i=0;i<3;i++){
+    const x = (i-1)*LEG_P;
+    // attach point: top of the body, in pivot space (rotates with the yaw group)
+    const p0 = new THREE.Vector3(x, -GAP, 0).applyMatrix4(yaw.matrix);
+    // hole entry + far top, in world, converted back into pivot space
+    const entryW = new THREE.Vector3(s.home.x + x, BOT_Y, s.home.z);
+    const topW   = new THREE.Vector3(s.home.x + x, BOT_Y + 40, s.home.z);
+    const p1 = entryW.clone().applyMatrix4(inv);
+    const p2 = topW.clone().applyMatrix4(inv);
+
+    const d1 = p0.distanceTo(p1);
+    const [a,b] = legs[i];
+    if(legLen <= d1){
+      cylBetween(a, p0, p0.clone().lerp(p1, legLen/Math.max(d1,1e-6)), .28);
+      b.visible = false;
+    }else{
+      cylBetween(a, p0, p1, .28);
+      const rest = legLen - d1;
+      cylBetween(b, p1, p1.clone().lerp(p2, rest/p1.distanceTo(p2)), .28);
+    }
+    // solder cone sits on the TOP face, apex up around the leg
+    sold[i].position.set(s.home.x + x, TOP_Y + .78, s.home.z);
+    sold[i].visible = st.sold > .02;
+    sold[i].scale.setScalar(Math.min(1, st.sold*1.6));
+  }
+}
+
+// ---------------------------------------------------------------- steps
+const STEPS = [
+  { t:'The board, two faces',
+    d:`Green slab = the PCB. <b>Top face</b> carries the resistors, chips and headers.
+       <b>Bottom face</b> is where the 16 hall sensors go — the side facing away from the pieces.
+       The 3 gold rings are the holes for one sensor; the faint big circle is the copper keep-out.`,
+    s:{ins:0,tip:0,sold:0,clip:0,use:0}, cam:'iso' },
+
+  { t:'The sensor itself',
+    d:`A3144 in a TO-92 package. On <b>your</b> clones the "3144" text is printed on the
+       <b>CURVED face</b>, and the blank <b>flat face</b> is the other side. (A genuine Allegro
+       part prints on the flat face — that swap is exactly why the direction rule is weird.)
+       3 legs, 2.54 mm apart. Nothing is cut or broken — it goes in as supplied.`,
+    s:{ins:0,tip:0,sold:0,clip:0,use:0}, cam:'under', notes:true },
+
+  { t:'Line it up under the outline',
+    d:`Approach from <b>below</b>. The bottom silk shows a D: an arc with one straight edge.
+       <span class="warn">The printed "3144" (curved) face points at the STRAIGHT edge;
+       the blank flat face points at the ARC.</span>
+       So the package sits <b>backwards inside its own outline</b> — that is the whole rule,
+       and it is what keeps 5 V out of the output leg.`,
+    s:{ins:0.45,tip:0,sold:0,clip:0,use:0}, cam:'under' },
+
+  { t:'Push the legs through',
+    d:`Legs go in from the bottom and <b>poke out through the top face</b>.
+       The body stays underneath. Nothing is soldered yet — it just rests in the holes.`,
+    s:{ins:1,tip:0,sold:0,clip:0,use:0}, cam:'side' },
+
+  { t:'Tip it flat',
+    d:`The body ends up <b>flat against the board, printed face touching the PCB</b>.
+       Upright it looks sideways and cannot see a magnet above it.
+       Easiest way: <b>bend the 3 legs 90° about 2–3 mm from the body first, then insert</b> —
+       it drops in already lying down. <b>Bend once only</b>; the legs snap on a second bend.`,
+    s:{ins:1,tip:1,sold:0,clip:0,use:0}, cam:'side' },
+
+  { t:'Solder — on the TOP face',
+    d:`Flip the board. The 3 legs stick up through the top, so that is where the iron goes.
+       <b>Solder always goes on the opposite face from the part body.</b>
+       Good joint = small shiny cone. 3 joints per sensor, 48 per board.`,
+    s:{ins:1,tip:1,sold:1,clip:0,use:0}, cam:'top' },
+
+  { t:'Clip the stubs',
+    d:`Cut the leftover leg just above each cone. That scrap is dead wire — about 13 mm per leg.
+       <span class="ok">Nothing is cut off the sensor that matters.</span>
+       It arrives with 3 long legs and ends up with 3 short bent ones.`,
+    s:{ins:1,tip:1,sold:1,clip:1,use:0}, cam:'top' },
+
+  { t:'How it works in play',
+    d:`The wooden top sits above the PCB, the piece sits on the square, the magnet is in its base.
+       The field passes straight <b>through the MDF and through the PCB</b> and the sensor
+       — lying flat, printed face up toward the piece — switches its output to 0 V.`,
+    s:{ins:1,tip:1,sold:1,clip:1,use:1}, cam:'iso' },
+];
+
+// ---------------------------------------------------------------- ui
+const stepsEl = document.getElementById('steps');
+let cur = 0, playing = false;
+STEPS.forEach((s,i)=>{
+  const el = document.createElement('div');
+  el.className = 'step'; el.innerHTML =
+    `<div class="t"><span class="n">${i+1}</span>${s.t}</div><div class="d">${s.d}</div>`;
+  el.onclick = ()=>go(i);
+  stepsEl.appendChild(el); s.el = el;
+});
+
+const alertEl = document.getElementById('alert');
+const tagEl   = document.getElementById('tag');
+
+function go(i){
+  cur = Math.max(0, Math.min(STEPS.length-1, i));
+  STEPS.forEach((s,k)=>s.el.classList.toggle('on', k===cur));
+  STEPS[cur].el.scrollIntoView({block:'nearest', behavior:'smooth'});
+  Object.assign(T, STEPS[cur].s);
+  notes.visible = !!STEPS[cur].notes && mode===1;
+  setCam(STEPS[cur].cam);
+  tagEl.textContent = `Step ${cur+1} of ${STEPS.length} — ${STEPS[cur].t}`;
+}
+document.getElementById('next').onclick = ()=>go(cur+1);
+document.getElementById('prev').onclick = ()=>go(cur-1);
+document.getElementById('play').onclick = e=>{
+  playing = !playing; e.target.textContent = playing ? '⏸ Pause' : '▶ Play all';
+  if(playing && cur === STEPS.length-1) go(0);
+};
+const wrongBtn = document.getElementById('wrong');
+wrongBtn.onclick = ()=>{
+  T.wrong = T.wrong ? 0 : 1;
+  wrongBtn.classList.toggle('on', !!T.wrong);
+  wrongBtn.textContent = T.wrong ? 'Back to correct way' : 'Show wrong way';
+  alertEl.classList.toggle('show', !!T.wrong);
+  alertEl.innerHTML = `<b>WRONG ORIENTATION</b><br>Printed face pointing away from the straight
+    edge. This puts 5 V into the output leg — the sensor dies the moment the board is powered.
+    About 6 of yours were killed this way.`;
+};
+const allBtn = document.getElementById('all');
+allBtn.onclick = ()=>{
+  mode = mode===1 ? 4 : 1;
+  allBtn.classList.toggle('on', mode===4);
+  allBtn.textContent = mode===4 ? 'Back to one sensor' : 'Show all 16';
+  boardSize = buildBoard(mode); spawnSensors(mode===1?1:16);
+  if(mode===4){ Object.assign(T,{ins:1,tip:1,sold:1,clip:1,use:0}); Object.assign(S,T); }
+  else Object.assign(T, STEPS[cur].s);
+  notes.visible = mode===1 && !!STEPS[cur].notes;
+  rig.visible = false;
+  setCam(mode===4 ? 'under' : STEPS[cur].cam);
+};
+const cheat = document.getElementById('cheat'), cheatBtn = document.getElementById('cheatBtn');
+document.getElementById('cheatX').onclick = ()=>{ cheat.classList.add('hide'); cheatBtn.classList.add('show'); };
+cheatBtn.onclick = ()=>{ cheat.classList.remove('hide'); cheatBtn.classList.remove('show'); };
+addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') go(cur+1);
+  if(e.key==='ArrowLeft')  go(cur-1);
+});
+
+// camera presets
+const CAMS = {
+  iso   : v=>[ v*.95,  v*.75,  v*1.15],
+  under : v=>[ v*.55, -v*.95,  v*.95 ],
+  top   : v=>[ v*.10,  v*1.4,  v*.30],
+  bottom: v=>[ v*.10, -v*1.4,  v*.30],
+  side  : v=>[ v*1.05, -v*.28,  v*.42],
+};
+let camTarget = new THREE.Vector3(), camPos = new THREE.Vector3();
+function setCam(name){
+  const v = mode===1 ? 62 : 210;
+  const [x,y,z] = (CAMS[name]||CAMS.iso)(v);
+  camPos.set(x,y,z);
+  const ty = mode===1 ? (cur<=2 ? -7 : -3) : 0;
+  camTarget.set(0, ty, 0);
+}
+document.querySelectorAll('[data-cam]').forEach(b=> b.onclick = ()=> setCam(b.dataset.cam));
+
+// ---------------------------------------------------------------- loop
+function resize(){
+  const w = view.clientWidth, h = view.clientHeight;
+  renderer.setSize(w,h); camera.aspect = w/h; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+
+let last = performance.now(), playClock = 0;
+function tick(now){
+  const dt = Math.min((now-last)/1000, .05); last = now;
+  const k = 1 - Math.pow(0.001, dt);           // smooth exponential approach
+
+  for(const key in T) S[key] += (T[key]-S[key])*k;
+  camera.position.lerp(camPos, k*.9);
+  controls.target.lerp(camTarget, k*.9);
+
+  for(const s of sensors) layoutSensor(s, S);
+
+  rig.visible = S.use > .02 && mode===1;
+  if(rig.visible){
+    rig.traverse(o=>{ if(o.material && 'opacity' in o.material){
+      o.material.transparent = true;
+      o.material.opacity = (o===rig.mdf?0.55:1) * S.use; }});
+    const bob = Math.sin(now/700)*0.7;         // piece gently settling
+    const magY = TOP_Y + 10.2 + bob;           // magnet just above the MDF
+    rig.mag.position.y   = magY;
+    rig.piece.position.y = magY + 1.5 + 12;
+    rig.field.position.y = (magY + BOT_Y)/2;
+    rig.field.scale.y    = Math.max(.05, (magY - BOT_Y + 2)/20);
+  }
+
+  if(playing){
+    playClock += dt;
+    if(playClock > 2.6){ playClock = 0;
+      if(cur < STEPS.length-1) go(cur+1);
+      else { playing = false; document.getElementById('play').textContent = '▶ Play all'; } }
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+// ---------------------------------------------------------------- boot
+boardSize = buildBoard(1);
+spawnSensors(1);
+resize(); setCam('iso');
+camera.position.set(60,48,72);
+go(0);
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

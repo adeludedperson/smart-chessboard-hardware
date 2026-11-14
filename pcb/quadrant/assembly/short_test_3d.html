@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Short-meter wiring — 3D guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html,body{margin:0;height:100%;background:#0d1117;color:#e6edf3;
+    font-family:-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden}
+  canvas{display:block}
+  #panel{position:fixed;top:14px;left:14px;z-index:10;background:rgba(13,17,23,.92);
+    border:1px solid #30363d;border-radius:12px;padding:14px 16px;max-width:330px;
+    box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  #panel h1{font-size:15px;margin:0 0 4px}
+  #panel p{font-size:12px;color:#9da7b3;margin:4px 0 10px;line-height:1.45}
+  .step{display:flex;gap:9px;align-items:flex-start;padding:7px 8px;border-radius:8px;
+    cursor:pointer;font-size:13px;line-height:1.4;border:1px solid transparent}
+  .step:hover{background:#161b22}
+  .step.active{background:#1c2431;border-color:#2f81f7}
+  .dot{width:13px;height:13px;border-radius:50%;flex:none;margin-top:3px;border:2px solid #0d1117}
+  .step b{font-weight:600}
+  .step small{color:#9da7b3;display:block}
+  #btns{margin-top:10px;display:flex;gap:8px}
+  button{background:#21262d;color:#e6edf3;border:1px solid #30363d;border-radius:8px;
+    padding:7px 12px;font-size:12px;cursor:pointer}
+  button:hover{border-color:#8b949e}
+  button.on{background:#1c2431;border-color:#2f81f7;color:#79b8ff}
+  #hint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;
+    font-size:11.5px;color:#8b949e;background:rgba(13,17,23,.8);padding:5px 12px;border-radius:20px}
+</style>
+</head>
+<body>
+<div id="panel">
+  <h1>Wire the short test — 5 steps</h1>
+  <p>Tap a step to spotlight it in 3D. Drag to rotate, scroll to zoom.</p>
+  <div class="step" data-k="res"><span class="dot" style="background:#d9b46a"></span>
+    <span><b>1 · 10k resistor</b> into the breadboard<small>one leg in Row A, other leg in Row B</small></span></div>
+  <div class="step" data-k="w1"><span class="dot" style="background:#ff4d4d"></span>
+    <span><b>2 · Red wire</b> — ESP32 <b>3V3</b> → Row A<small>3V3 is the first pin, top-left corner</small></span></div>
+  <div class="step" data-k="w2"><span class="dot" style="background:#ffd23f"></span>
+    <span><b>3 · Yellow wire</b> — ESP32 <b>P34</b> → Row B<small>P34 is the 5th pin from the left, same row</small></span></div>
+  <div class="step" data-k="w3"><span class="dot" style="background:#3fd97a"></span>
+    <span><b>4 · Green wire</b> — Row B → <b>J1 pin 2</b><small>2nd pin from the board's left edge</small></span></div>
+  <div class="step" data-k="w4"><span class="dot" style="background:#c8cdd4"></span>
+    <span><b>5 · Grey wire</b> — ESP32 <b>GND</b> → <b>J1 pin 3</b><small>GND next to 5V · straight to the board, skips the breadboard</small></span></div>
+  <div id="btns">
+    <button id="flow">▶ Show current flow</button>
+    <button id="reset">Reset view</button>
+  </div>
+</div>
+<div id="hint">drag = rotate · scroll = zoom · right-drag = pan</div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d1117);
+const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 2000);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.appendChild(renderer.domElement);
+const HOME = new THREE.Vector3(25, 230, 300);
+camera.position.copy(HOME);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(-25, 0, -5); controls.enableDamping = true;
+
+scene.add(new THREE.AmbientLight(0xffffff, .55));
+const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(60,120,80); scene.add(key);
+const fill = new THREE.DirectionalLight(0x88aaff, .4); fill.position.set(-80,60,-40); scene.add(fill);
+
+// table
+const table = new THREE.Mesh(new THREE.PlaneGeometry(560,340),
+  new THREE.MeshStandardMaterial({color:0x151a21, roughness:.95}));
+table.rotation.x = -Math.PI/2; table.position.y = -1.2; scene.add(table);
+
+function labelSprite(text, color='#e6edf3', px=46){
+  const c = document.createElement('canvas'), g = c.getContext('2d');
+  g.font = `600 ${px}px -apple-system, Segoe UI, sans-serif`;
+  const w = Math.ceil(g.measureText(text).width)+34;
+  c.width = w; c.height = px+26;
+  const g2 = c.getContext('2d');
+  g2.font = `600 ${px}px -apple-system, Segoe UI, sans-serif`;
+  g2.fillStyle = 'rgba(13,17,23,.72)';
+  g2.beginPath(); g2.roundRect(0,0,w,px+26,14); g2.fill();
+  g2.fillStyle = color; g2.textBaseline='middle';
+  g2.fillText(text, 17, (px+26)/2+2);
+  const t = new THREE.CanvasTexture(c); t.anisotropy = 4;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({map:t, depthTest:false, transparent:true}));
+  const k = 0.09; s.scale.set(w*k, (px+26)*k, 1);
+  s.renderOrder = 99; return s;
+}
+
+const groups = {};  // spotlight groups
+function grp(k){ if(!groups[k]) { groups[k]=new THREE.Group(); scene.add(groups[k]); } return groups[k]; }
+
+// ============ Quadrant PCB (left) — partial corner, left edge with J1 ============
+const pcb = new THREE.Group(); pcb.position.set(-150, 0, -10); scene.add(pcb);
+{
+  const board = new THREE.Mesh(new THREE.BoxGeometry(95, 1.8, 120),
+    new THREE.MeshStandardMaterial({color:0x1d7a4f, roughness:.6}));
+  board.position.y = .9; pcb.add(board);
+  // torn edge hint: darker strip on right side
+  const torn = new THREE.Mesh(new THREE.BoxGeometry(3, 2.0, 120),
+    new THREE.MeshStandardMaterial({color:0x0f3d28}));
+  torn.position.set(47, .9, 0); pcb.add(torn);
+  const t1 = labelSprite('chess quadrant PCB (left part shown)', '#9fd0ff', 40);
+  t1.position.set(0, 14, -52); pcb.add(t1);
+
+  // J1 header: 6 pins along left edge, pin1 nearest edge (most -x), row runs along x
+  const j1 = new THREE.Group(); j1.position.set(-38, 1.8, 26); pcb.add(j1);
+  const names = ['1 · 5V','2 · 3V3','3 · GND','4 · PL','5 · CP','6 · SER'];
+  window.J1pins = [];
+  for(let i=0;i<6;i++){
+    const x = i*6.2;
+    const plastic = new THREE.Mesh(new THREE.BoxGeometry(5.6,5,5.6),
+      new THREE.MeshStandardMaterial({color:0x111111}));
+    plastic.position.set(x,2.5,0); j1.add(plastic);
+    const hot = (i===1||i===2);
+    const pin = new THREE.Mesh(new THREE.CylinderGeometry(.8,.8,13),
+      new THREE.MeshStandardMaterial({color: hot ? (i===1?0x3fd97a:0xc8cdd4) : 0xb08d3f,
+        emissive: hot ? (i===1?0x1d7a3f:0x555b63) : 0x000000, metalness:.7, roughness:.3}));
+    pin.position.set(x,9.5,0); j1.add(pin);
+    const lbl = labelSprite(names[i], hot ? (i===1?'#3fd97a':'#c8cdd4') : '#8b949e', hot?42:32);
+    lbl.position.set(x, 19 + (i%2)*5.5, 0); j1.add(lbl);
+    J1pins.push(new THREE.Vector3());
+    plastic.updateWorldMatrix(true,false);
+    J1pins[i] = new THREE.Vector3(x,13,0).applyMatrix4(j1.matrixWorld.identity().copy(j1.matrixWorld));
+  }
+  // recompute world positions after scene graph settles
+  j1.updateWorldMatrix(true,true);
+  for(let i=0;i<6;i++) J1pins[i] = j1.localToWorld(new THREE.Vector3(i*6.2, 12, 0));
+  const edge = labelSprite('← board edge this side', '#8b949e', 34);
+  edge.position.set(-46, 8, 26); pcb.add(edge);
+}
+
+// ============ Breadboard (middle) ============
+const bb = new THREE.Group(); bb.position.set(-10, 0, 30); scene.add(bb);
+let rowA_end, rowB_end, rowA_mid, rowB_mid;
+{
+  const body = new THREE.Mesh(new THREE.BoxGeometry(54, 9, 84),
+    new THREE.MeshStandardMaterial({color:0xe8e4da, roughness:.8}));
+  body.position.y = 4.5; bb.add(body);
+  const gutter = new THREE.Mesh(new THREE.BoxGeometry(4.5, .4, 84),
+    new THREE.MeshStandardMaterial({color:0xcfc9bc}));
+  gutter.position.y = 9.2; bb.add(gutter);
+  // holes: 2 columns of 5-hole rows, z rows
+  const holeM = new THREE.MeshStandardMaterial({color:0x2a2a2a});
+  const holeG = new THREE.BoxGeometry(1.6,.6,1.6);
+  for(let side=-1; side<=1; side+=2)
+    for(let r=0;r<14;r++)
+      for(let h=0;h<5;h++){
+        const m = new THREE.Mesh(holeG, holeM);
+        m.position.set(side*(6+h*4.4), 9.2, -39+r*6);
+        bb.add(m);
+      }
+  // Row A (r=4) & Row B (r=8) highlight strips, left half
+  const mkRow = (r,color,name)=>{
+    const strip = new THREE.Mesh(new THREE.BoxGeometry(24, .5, 4.6),
+      new THREE.MeshStandardMaterial({color, emissive:color, emissiveIntensity:.55, transparent:true, opacity:.85}));
+    strip.position.set(-14.8, 9.35, -39+r*6); bb.add(strip);
+    const l = labelSprite(name, '#'+color.toString(16).padStart(6,'0'), 40);
+    l.position.set(-34, 16, -39+r*6); bb.add(l);
+    return strip;
+  };
+  mkRow(4, 0xff8c5a, 'Row A');
+  mkRow(8, 0x5ab8ff, 'Row B');
+  const note = labelSprite('the 5 holes in one row are connected', '#9da7b3', 30);
+  note.position.set(0, 13, 42); bb.add(note);
+  bb.updateWorldMatrix(true,true);
+  rowA_end = bb.localToWorld(new THREE.Vector3(-23.6, 9.5, -39+4*6));  // outer hole row A
+  rowB_end = bb.localToWorld(new THREE.Vector3(-23.6, 9.5, -39+8*6));
+  rowA_mid = bb.localToWorld(new THREE.Vector3(-10.4, 9.5, -39+4*6));  // resistor holes
+  rowB_mid = bb.localToWorld(new THREE.Vector3(-10.4, 9.5, -39+8*6));
+  const t = labelSprite('breadboard', '#d9cba3', 40);
+  t.position.set(20, 15, -44); bb.add(t);
+}
+
+// ============ resistor Row A -> Row B ============
+{
+  const g = grp('res');
+  const p0 = rowA_mid.clone(), p1 = rowB_mid.clone();
+  const mid = p0.clone().lerp(p1,.5); mid.y += 7;
+  const curve = new THREE.CatmullRomCurve3([p0, mid, p1]);
+  // legs
+  const legGeo = new THREE.TubeGeometry(curve, 40, .5, 8);
+  g.add(new THREE.Mesh(legGeo, new THREE.MeshStandardMaterial({color:0x999999, metalness:.8, roughness:.3})));
+  // body at center, oriented along path
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(2.4,2.4,9,24),
+    new THREE.MeshStandardMaterial({color:0xd9b46a, roughness:.55}));
+  body.position.copy(mid);
+  const dir = p1.clone().sub(p0).normalize();
+  body.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir);
+  g.add(body);
+  const bandCols = [0x6b3a1f, 0x111111, 0xff7a1a, 0xd4af37]; // brown black orange gold
+  bandCols.forEach((c,i)=>{
+    const band = new THREE.Mesh(new THREE.CylinderGeometry(2.55,2.55,.9,24),
+      new THREE.MeshStandardMaterial({color:c}));
+    band.position.copy(mid).addScaledVector(dir, -3+i*2);
+    band.quaternion.copy(body.quaternion); g.add(band);
+  });
+  const l = labelSprite('10k resistor (brown·black·orange)', '#d9b46a', 38);
+  l.position.copy(mid).add(new THREE.Vector3(14,9,0)); g.add(l);
+}
+
+// ============ ESP32 (right) ============
+const esp = new THREE.Group(); esp.position.set(120, 0, 10); scene.add(esp);
+let espPins = {};
+{
+  const board = new THREE.Mesh(new THREE.BoxGeometry(52, 1.6, 100),
+    new THREE.MeshStandardMaterial({color:0x10131a, roughness:.6}));
+  board.position.y = .8; esp.add(board);
+  const label = new THREE.Mesh(new THREE.BoxGeometry(30, .3, 52),
+    new THREE.MeshStandardMaterial({color:0xdfe5ec}));
+  label.position.set(0,1.75,4); esp.add(label);
+  const chip = new THREE.Mesh(new THREE.BoxGeometry(24,2.4,28),
+    new THREE.MeshStandardMaterial({color:0x2b313b, metalness:.5, roughness:.4}));
+  chip.position.set(0,2.2,-28); esp.add(chip);
+  const usb = new THREE.Mesh(new THREE.BoxGeometry(12,4,8),
+    new THREE.MeshStandardMaterial({color:0x9aa4b0, metalness:.9, roughness:.25}));
+  usb.position.set(0,2.6,49); esp.add(usb);
+  const usbL = labelSprite('micro-USB (cable to laptop)', '#8b949e', 30);
+  usbL.position.set(0, 10, 58); esp.add(usbL);
+  const names = ['3V3','EN','SVP','SVN','P34','P35','P32','P33','P25','P26','P27','P14','P12','GND','P13','SD2','SD3','GND','5V'];
+  // left column of pins = the "3V3 ... 5V" row. z from -45 (3V3) to +45 (5V)
+  for(let i=0;i<19;i++){
+    const z = -45 + i*5;
+    const hot = (i===0||i===4||i===17);
+    const col = i===0?0xff4d4d : i===4?0xffd23f : i===17?0xc8cdd4 : 0xb08d3f;
+    const pin = new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,10),
+      new THREE.MeshStandardMaterial({color:col, metalness:.7, roughness:.3,
+        emissive: hot?col:0x000000, emissiveIntensity: hot?.45:0}));
+    pin.position.set(-24, 5, z); esp.add(pin);
+    if(hot){
+      const l = labelSprite(names[i], '#'+col.toString(16).padStart(6,'0'), 44);
+      l.position.set(-36, 13, z); esp.add(l);
+    }
+    if(i===0) espPins.v33 = new THREE.Vector3(-24,10,z);
+    if(i===4) espPins.p34 = new THREE.Vector3(-24,10,z);
+    if(i===17) espPins.gnd = new THREE.Vector3(-24,10,z);
+  }
+  // faint labels for the rest so the row reads real
+  [['EN',1],['P27',10],['5V',18]].forEach(([n,i])=>{
+    const l = labelSprite(n, '#566069', 26);
+    l.position.set(-31, 8, -45+i*5); esp.add(l);
+  });
+  esp.updateWorldMatrix(true,true);
+  for(const k in espPins) espPins[k] = esp.localToWorld(espPins[k].clone());
+  const t = labelSprite('ESP32 (NodeMCU-32S)', '#9fd0ff', 40);
+  t.position.set(6, 14, -54); esp.add(t);
+}
+
+// ============ wires ============
+const wirePaths = {};
+function wire(k, from, to, color, sagUp=26, viaMid){
+  const g = grp(k);
+  const pts = [from.clone()];
+  if(viaMid) pts.push(viaMid.clone());
+  else {
+    const m = from.clone().lerp(to,.5); m.y += sagUp; pts.push(m);
+  }
+  pts.push(to.clone());
+  const curve = new THREE.CatmullRomCurve3(pts);
+  wirePaths[k] = curve;
+  const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 80, 1.1, 10),
+    new THREE.MeshStandardMaterial({color, roughness:.5,
+      emissive:color, emissiveIntensity:.12}));
+  g.add(tube);
+  // connector ends
+  [from,to].forEach(p=>{
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(1.6,1.6,5,10),
+      new THREE.MeshStandardMaterial({color:0x181818}));
+    c.position.copy(p); c.position.y += 1; g.add(c);
+  });
+  return curve;
+}
+wire('w1', espPins.v33, rowA_end, 0xff4d4d, 30);
+wire('w2', espPins.p34, rowB_end, 0xffd23f, 24);
+wire('w3', rowB_end.clone().add(new THREE.Vector3(0,0,3)), J1pins[1], 0x3fd97a, 26);
+{
+  const m = espPins.gnd.clone().lerp(J1pins[2],.5); m.y += 42; m.z += 30;
+  wire('w4', espPins.gnd, J1pins[2], 0xc8cdd4, 0, m);
+}
+// wire labels
+const wl = [
+  ['w1','red · 3V3 → Row A', '#ff4d4d'],
+  ['w2','yellow · P34 → Row B', '#ffd23f'],
+  ['w3','green · Row B → J1 pin 2', '#3fd97a'],
+  ['w4','grey · GND → J1 pin 3 (direct)', '#c8cdd4'],
+];
+wl.forEach(([k,txt,col])=>{
+  const p = wirePaths[k].getPoint(.5);
+  const l = labelSprite(txt, col, 38);
+  l.position.copy(p).add(new THREE.Vector3(0,8,0));
+  grp(k).add(l);
+});
+
+// ============ spotlight logic ============
+const allKeys = ['res','w1','w2','w3','w4'];
+let activeKey = null;
+function setSpot(k){
+  activeKey = (activeKey===k)?null:k;
+  allKeys.forEach(key=>{
+    groups[key].traverse(o=>{
+      if(o.material){
+        o.material.transparent = true;
+        o.material.opacity = (!activeKey || key===activeKey) ? 1 : .12;
+      }
+    });
+  });
+  document.querySelectorAll('.step').forEach(el=>
+    el.classList.toggle('active', el.dataset.k===activeKey));
+}
+document.querySelectorAll('.step').forEach(el=>
+  el.addEventListener('click', ()=>setSpot(el.dataset.k)));
+
+// ============ current flow animation ============
+let flowOn = false;
+const flowBtn = document.getElementById('flow');
+flowBtn.addEventListener('click', ()=>{
+  flowOn = !flowOn;
+  flowBtn.classList.toggle('on', flowOn);
+  flowBtn.textContent = flowOn ? '⏸ Hide current flow' : '▶ Show current flow';
+  flowGroup.visible = flowOn;
+});
+document.getElementById('reset').addEventListener('click', ()=>{
+  camera.position.copy(HOME); controls.target.set(0,0,-5); setSpot(activeKey); 
+});
+const flowGroup = new THREE.Group(); flowGroup.visible = false; scene.add(flowGroup);
+// path: w1 -> resistor arc (approx) -> w3 -> (inside pcb, dashed) -> back w4 reversed
+const resCurve = new THREE.CatmullRomCurve3([rowA_mid, rowA_mid.clone().lerp(rowB_mid,.5).add(new THREE.Vector3(0,7,0)), rowB_mid]);
+const inPcb = new THREE.CatmullRomCurve3([J1pins[1], J1pins[1].clone().lerp(J1pins[2],.5).add(new THREE.Vector3(0,-8,0)), J1pins[2]]);
+const chain = [
+  {c:wirePaths.w1, rev:false},
+  {c:resCurve, rev:false},
+  {c:wirePaths.w3, rev:false},
+  {c:inPcb, rev:false},
+  {c:wirePaths.w4, rev:true},
+];
+const dots = [];
+for(let i=0;i<26;i++){
+  const d = new THREE.Mesh(new THREE.SphereGeometry(1.5,10,10),
+    new THREE.MeshBasicMaterial({color:0x7fd4ff}));
+  flowGroup.add(d); dots.push(d);
+}
+const flowLbl = labelSprite('tiny safe current: 0.33 mA (10k limits it)', '#7fd4ff', 34);
+flowLbl.position.set(-40, 42, 30); flowGroup.add(flowLbl);
+
+const lens = chain.map(s=>s.c.getLength());
+const totalLen = lens.reduce((a,b)=>a+b,0);
+function flowPoint(t){ // t 0..1 along whole chain
+  let d = t*totalLen;
+  for(let i=0;i<chain.length;i++){
+    if(d<=lens[i]){
+      let u = d/lens[i];
+      if(chain[i].rev) u = 1-u;
+      return chain[i].c.getPointAt(Math.min(Math.max(u,0),1));
+    }
+    d -= lens[i];
+  }
+  return chain.at(-1).c.getPointAt(chain.at(-1).rev?0:1);
+}
+
+const clock = new THREE.Clock();
+function tick(){
+  requestAnimationFrame(tick);
+  controls.update();
+  if(flowOn){
+    const t = clock.getElapsedTime()*.09;
+    dots.forEach((d,i)=>{
+      const u = (t + i/dots.length)%1;
+      d.position.copy(flowPoint(u));
+    });
+  }
+  renderer.render(scene, camera);
+}
+tick();
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

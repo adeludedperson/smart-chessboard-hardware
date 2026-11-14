@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chess Quadrant PCB — What you're looking at</title>
+<style>
+  body{margin:0;background:#0e0f14;color:#e8e8ee;font-family:system-ui,-apple-system,sans-serif;padding:28px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:#9a9db0;font-size:13px;margin-bottom:24px}
+  .row{display:flex;gap:28px;flex-wrap:wrap}
+  .panel{flex:1;min-width:480px;max-width:760px}
+  .panel h2{font-size:15px;margin:0 0 10px;color:#f4c87a}
+  .imgwrap{position:relative;border-radius:10px;overflow:hidden;border:1px solid #2a2c38}
+  .imgwrap img{width:100%;display:block}
+  .tag{position:absolute;background:rgba(10,11,16,.92);border:1px solid #e0a24a;color:#ffd98f;
+       font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:6px;white-space:nowrap;
+       transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.5)}
+  .tag::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:VARpx;background:#e0a24a}
+  .tag.dn::after{height:22px}
+  .legend{margin-top:14px;font-size:12.5px;line-height:1.75;color:#c9ccdb}
+  .legend b{color:#ffd98f}
+  .note{margin-top:26px;background:#171922;border:1px solid #2a2c38;border-radius:10px;
+        padding:14px 18px;font-size:13px;line-height:1.7;max-width:1000px}
+  .note b{color:#f4c87a}
+</style>
+</head>
+<body>
+<h1>Smart Chess Quadrant v1 — one of the 4 identical PCBs</h1>
+<div class="sub">180×180mm · covers 4×4 squares · 45mm pitch (regenerates to any size) · 2-layer · everything through-hole</div>
+
+<div class="row">
+  <div class="panel">
+    <h2>TOP — the side you solder (faces down into the cabinet)</h2>
+    <div class="imgwrap">
+      <img src="render_top.png">
+      <div class="tag" style="left:13%;top:19%">R0 — 10kΩ pull-up (1 per square)</div>
+      <div class="tag" style="left:30%;top:52%">U1 — 74HC165 shift register</div>
+      <div class="tag" style="left:79%;top:52%">U2 — 74HC165 shift register</div>
+      <div class="tag" style="left:10%;top:47%">J1 IN ← from ESP32 / prev quadrant</div>
+      <div class="tag" style="left:90%;top:44%">J2 OUT → next quadrant</div>
+      <div class="tag" style="left:13%;top:9%">S0 keep-out ring (sensor is on the other side)</div>
+      <div class="tag" style="left:70%;top:31%">+5V / +3V3 power rails</div>
+      <div class="tag" style="left:26%;top:56.5%">C8 — 100nF decoupling</div>
+      <div class="tag" style="left:7%;top:30%">C2 — 100nF (5V rail)</div>
+      <div class="tag" style="left:4%;top:3.5%">M2 mounting hole</div>
+    </div>
+    <div class="legend">
+      The <b>dark circles</b> are copper keep-out zones — no copper pour near a hall
+      sensor so the ground plane can't distort the magnet's field. The three tiny
+      gold pads in each circle are where the sensor's legs poke through from the
+      back. <b>16 resistors</b>, <b>2 chips</b>, <b>10 caps</b>, <b>2 headers</b> —
+      that's all you solder on this side.
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>BOTTOM — faces UP, pressed against the wooden board</h2>
+    <div class="imgwrap">
+      <img src="render_bottom.png">
+      <div class="tag" style="left:13%;top:13%">A3144 hall sensor (TO-92), one per square</div>
+      <div class="tag" style="left:62%;top:38%">sensor sits at the EXACT center of its square</div>
+      <div class="tag" style="left:20%;top:50%">U1's pins from the back</div>
+      <div class="tag" style="left:53%;top:65%">vertical routing lanes (B.Cu)</div>
+      <div class="tag" style="left:87%;top:88%">S12 label — matches square position</div>
+    </div>
+    <div class="legend">
+      This side touches the underside of the wooden board. Each <b>black
+      D-shaped part</b> is a hall sensor lying flat, face-up — it senses the
+      piece's magnet <b>through the wood</b>. Note the mirrored numbering
+      (S0 top-right here) because you're looking at the board flipped over.
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  <b>How it works, one sentence:</b> a piece's magnet trips the sensor under it →
+  the two shift-register chips squeeze all 16 sensor states into a single wire →
+  daisy-chains through J2→J1 across all 4 quadrants → ESP32 reads all 64 squares
+  in ~64 microseconds over just 4 wires.<br><br>
+  <b>Why 4 identical boards instead of one big one:</b> cheaper to fab, better yield,
+  one dead board = replace a quarter not the whole thing, and each 180mm quadrant fits
+  Lion Circuits' automated flow.<br><br>
+  <b>The one thing still missing before ordering:</b> the real square size of your
+  wooden board. Everything regenerates from that single number in ~30 seconds.
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Solder Job — Chess Quadrant PCB</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: #111; font-size: 13px; line-height: 1.45; }
+  h1 { font-size: 22px; margin-bottom: 2px; }
+  .sub { color: #555; margin-bottom: 14px; }
+  h2 { font-size: 15px; margin: 14px 0 6px; border-bottom: 2px solid #111; padding-bottom: 2px; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0; }
+  th, td { border: 1px solid #999; padding: 4px 8px; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  .danger { border: 3px solid #c00; background: #fff3f3; padding: 10px 12px; margin: 12px 0; border-radius: 6px; }
+  .danger h2 { border: none; color: #c00; margin: 0 0 6px; font-size: 16px; }
+  .big { font-size: 15px; font-weight: 700; }
+  .row { display: flex; gap: 12px; align-items: flex-start; }
+  .col { flex: 1; }
+  img.render { width: 100%; border: 1px solid #ccc; border-radius: 4px; }
+  .cap { font-size: 11px; color: #555; text-align: center; margin-top: 2px; }
+  svg { display: block; margin: 6px auto; }
+  .ok { color: #0a7a1e; font-weight: 700; }
+  .bad { color: #c00; font-weight: 700; }
+  ol li { margin-bottom: 4px; }
+  .page2 { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>PCB Soldering Job — Chess Sensor Board</h1>
+<p class="sub"><b>4 identical boards to assemble</b> (1 more board is a spare — do NOT populate) &nbsp;·&nbsp; Board: 200×200mm, 2-layer &nbsp;·&nbsp; 46 parts / 144 joints per board, ALL through-hole (no SMD) &nbsp;·&nbsp; Leaded solder</p>
+
+<h2>Parts per board (all supplied, bagged &amp; labelled)</h2>
+<table>
+  <tr><th>Bag</th><th>Part</th><th>Per board</th><th>Total (4 boards + spares)</th><th>Where</th><th>Positions on board</th></tr>
+  <tr><td>1</td><td>A3144 hall sensor (TO-92, 3 legs)</td><td>16</td><td>70 (pre-tested; extras are spares)</td><td class="bad">BOTTOM side</td><td>S0 – S15</td></tr>
+  <tr><td>2</td><td>10k resistor (axial)</td><td>16</td><td>70</td><td>Top side</td><td>R0 – R15</td></tr>
+  <tr><td>3</td><td>100nF ceramic disc capacitor</td><td>10</td><td>45</td><td>Top side</td><td>C0 – C9</td></tr>
+  <tr><td>4</td><td>74HC165 IC (DIP-16)</td><td>2</td><td>9</td><td>Top side</td><td>U1, U2 — notch matches silkscreen notch</td></tr>
+  <tr><td>5</td><td>Pin header 1×6 (2.54mm, vertical)</td><td>2</td><td>9</td><td>Top side</td><td>J1, J2</td></tr>
+</table>
+<p>Resistors, capacitors, headers: not polarized — any direction is fine. ICs: match the notch. Sensors: <b>see the red box below — this is the whole job's one risk.</b></p>
+
+<div class="danger">
+  <h2>⚠ HALL SENSORS (S0–S15): NON-STANDARD DIRECTION — READ FIRST</h2>
+  <p class="big">These sensors go on the BOTTOM of the board, and they are REVERSED vs normal parts.</p>
+  <p style="margin-top:6px">The printed <b>TEXT side</b> of the sensor must face the <b>FLAT side of the white outline</b> printed on the PCB. (Normal parts face the other way — these are mirror-pinout clones. Inserting them the normal way puts 5V into the output pin and <b>destroys the sensor</b>.)</p>
+
+  <svg width="620" height="180" viewBox="0 0 620 180">
+    <!-- CORRECT -->
+    <text x="150" y="16" text-anchor="middle" font-size="14" font-weight="bold" fill="#0a7a1e">✔ CORRECT</text>
+    <!-- silk outline: D shape, flat side on left -->
+    <path d="M 100 40 L 100 120 A 45 45 0 0 0 100 40 Z" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="60" y="85" text-anchor="middle" font-size="10" fill="#666">outline FLAT</text>
+    <text x="60" y="97" text-anchor="middle" font-size="10" fill="#666">side</text>
+    <!-- sensor body: flat side RIGHT, text (curved) side LEFT facing outline flat -->
+    <path d="M 148 45 L 148 115 A 38 38 0 0 1 148 45 Z" transform="rotate(180 148 80)" fill="#333"/>
+    <text x="125" y="84" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">A3144</text>
+    <text x="125" y="140" text-anchor="middle" font-size="10" fill="#0a7a1e" font-weight="bold">TEXT faces outline's flat side</text>
+    <!-- WRONG -->
+    <text x="460" y="16" text-anchor="middle" font-size="14" font-weight="bold" fill="#c00">✘ WRONG (kills sensor)</text>
+    <path d="M 410 40 L 410 120 A 45 45 0 0 0 410 40 Z" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="370" y="85" text-anchor="middle" font-size="10" fill="#666">outline FLAT</text>
+    <text x="370" y="97" text-anchor="middle" font-size="10" fill="#666">side</text>
+    <!-- sensor flat side LEFT (normal convention) = wrong here -->
+    <path d="M 458 45 L 458 115 A 38 38 0 0 1 458 45 Z" fill="#333"/>
+    <text x="478" y="84" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">A3144</text>
+    <text x="465" y="140" text-anchor="middle" font-size="10" fill="#c00" font-weight="bold">flat-to-flat = normal way = WRONG here</text>
+  </svg>
+
+  <p class="big" style="margin-top:4px">MANDATORY FIRST STEP — do not skip:</p>
+  <ol style="margin: 4px 0 0 18px">
+    <li>On the first board, solder <b>ONE sensor at S0</b> and <b>one resistor at R0</b> — nothing else.</li>
+    <li>Power at connector J1 (pins labelled on board): <b>5V pin AND 3V3 pin → supply +5V</b>, <b>GND pin → supply −</b>. (Tying 3V3 to 5V is safe for this test — no chips fitted yet.)</li>
+    <li>Multimeter: black probe on GND. Red probe on each <b>outer leg</b> of the sensor. One leg reads ~5V always (that's supply). The other is the output: <b>idle ≈ 5V, magnet touched to sensor ≈ 0V</b>. <b>Try BOTH faces of the magnet</b> — the sensor responds to only one pole.</li>
+    <li>For the test, also <b>fold the S0 body flat against the board</b> (text face touching the PCB) and bring the magnet to the board's other side, above the sensor — same as final use.</li>
+    <li class="ok">Output drops to ~0V with magnet? → direction confirmed. Solder all remaining sensors the same way.</li>
+    <li class="bad">No leg responds to the magnet? → STOP. Call the customer. Do not solder more sensors.</li>
+  </ol>
+</div>
+
+<h2>Sensor body must be folded flat</h2>
+<p>After inserting the legs, <b>bend each sensor 90° so the body lies flat against the PCB, TEXT face touching the board</b>. Do not leave sensors standing upright — an upright sensor cannot detect the magnet. Bend gently at the legs, then solder. All other parts: normal.</p>
+
+<div class="page2"></div>
+
+<h2>Board reference — TOP side (resistors, capacitors, ICs, connectors)</h2>
+<img class="render" src="../plots/render_top_50mm.png" alt="Top side render">
+<p class="cap">TOP: R0–R15, C0–C9, U1, U2, J1 (left edge), J2 (right edge)</p>
+
+<h2>Board reference — BOTTOM side (16 hall sensors)</h2>
+<img class="render" src="../plots/render_bottom_50mm.png" alt="Bottom side render">
+<p class="cap">BOTTOM: S0–S15 at square centers — labels printed on this side. Remember: TEXT side of each sensor faces the FLAT side of its outline.</p>
+
+</body>
+</html>

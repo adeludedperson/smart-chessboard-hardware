@@ -1,0 +1,14 @@
+* short_meter: 3V3 -> 10k series -> node -> Rshort -> GND
+.param rshort=1
+V1 vcc 0 3.3
+R1 vcc node 10k
+R2 node 0 {rshort}
+.control
+foreach r 0.1 1 10 100 330 1k 10k 100k
+  alterparam rshort = $r
+  reset
+  op
+  print node
+end
+.endc
+.end
